@@ -26,9 +26,12 @@ public class Student {
     @JoinColumn(name="formation_id", referencedColumnName="id")
     private Formation formation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="lesson_session_id", referencedColumnName="id")
-    private LessonSession lessonSession;
+    @ManyToMany
+    @JoinTable(name="student_lesson_session",
+            joinColumns=@JoinColumn(name="student_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="lesson_session_id", referencedColumnName="id")
+    )
+    private List<LessonSession> lessonSessions;
 
     public Student(){}
 
@@ -79,11 +82,11 @@ public class Student {
         this.formation = formation;
     }
 
-    public LessonSession getLessonSession() {
-        return lessonSession;
+    public List<LessonSession> getLessonSessions() {
+        return lessonSessions;
     }
 
-    public void setLessonSession(LessonSession lessonSession) {
-        this.lessonSession = lessonSession;
+    public void setLessonSessions(List<LessonSession> lessonSessions) {
+        this.lessonSessions = lessonSessions;
     }
 }

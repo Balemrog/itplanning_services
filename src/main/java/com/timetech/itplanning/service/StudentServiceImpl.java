@@ -1,7 +1,7 @@
 package com.timetech.itplanning.service;
 
-import com.timetech.itplanning.dao.LessonRepository;
-import com.timetech.itplanning.model.Lesson;
+import com.timetech.itplanning.dao.StudentRepository;
+import com.timetech.itplanning.model.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -10,27 +10,27 @@ import java.util.List;
 
 @Service
 @Profile("default")
-public class LessonServiceImpl implements LessonService{
+public class StudentServiceImpl implements StudentService{
 
-    private LessonRepository repository;
+    private StudentRepository repository;
 
     @Autowired
-    public LessonServiceImpl(LessonRepository repository){
+    public StudentServiceImpl(StudentRepository repository){
         this.repository = repository;
     }
 
     @Override
-    public List<Lesson> getAllLesson() {
+    public List<Student> getAllStudent() {
         return repository.findAll();
     }
 
     @Override
-    public Lesson getLessonById(Integer id) {
+    public Student getStudentById(Integer id) {
         return repository.findById(id).orElseThrow();
     }
 
     @Override
-    public void saveLesson(Lesson lesson) {
-        repository.save(lesson);
+    public void saveStudent(Student student) {
+        repository.save(student);
     }
 }
