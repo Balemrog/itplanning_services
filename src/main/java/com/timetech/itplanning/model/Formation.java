@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 @Table(name = "formation")
 public class Formation {
@@ -17,21 +19,20 @@ public class Formation {
     @Size(max=100)
     private String label;
 
-    @NotBlank
-    private Modality modality;
-
     @NotNull
-    @ManyToOne
-    private Teacher teacher;
+    @OneToMany(mappedBy = "formation")
+    private List<Student> students;
+
+    @ManyToMany(mappedBy = "formations")
+    private List<Campus> campusList;
 
     public Formation() {
     }
 
-    public Formation(int id, String label, Modality modality, Teacher teacher) {
+    public Formation(int id, String label, List<Student> students) {
         this.id = id;
         this.label = label;
-        this.modality = modality;
-        this.teacher = teacher;
+        this.students = students;
     }
 
     public int getId() {
@@ -50,19 +51,11 @@ public class Formation {
         this.label = label;
     }
 
-    public Modality getModality() {
-        return modality;
+    public List<Student> getStudents() {
+        return students;
     }
 
-    public void setModality(Modality modality) {
-        this.modality = modality;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }

@@ -23,13 +23,6 @@ public class Teacher {
     private Boolean isEmployee;
 
     @ManyToMany
-    @JoinTable(name="skill_teacher",
-            joinColumns=@JoinColumn(name="idSkill", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="idTeacher", referencedColumnName="id")
-    )
-    private List<Skill> teacherSkills;
-
-    @ManyToMany
     @JoinTable(name="demand_teacher",
             joinColumns=@JoinColumn(name="idDemand", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="idTeacher", referencedColumnName="id")
@@ -39,12 +32,11 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String firstName, String lastName, Boolean isEmployee, List<Skill> teacherSkills, List<Demand> demands) {
+    public Teacher(int id, String firstName, String lastName, Boolean isEmployee, List<Demand> demands) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isEmployee = isEmployee;
-        this.teacherSkills = teacherSkills;
         this.demands = demands;
     }
 
@@ -78,14 +70,6 @@ public class Teacher {
 
     public void setEmployee(Boolean employee) {
         isEmployee = employee;
-    }
-
-    public List<Skill> getTeacherSkills() {
-        return teacherSkills;
-    }
-
-    public void setTeacherSkills(List<Skill> teacherSkills) {
-        this.teacherSkills = teacherSkills;
     }
 
     public List<Demand> getDemands() {

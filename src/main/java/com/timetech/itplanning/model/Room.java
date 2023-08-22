@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 @Entity
 @Table(name = "room")
 public class Room {
@@ -25,18 +27,27 @@ public class Room {
     @Size(max=100)
     private String roomName;
 
-    @NotNull
-    @ManyToOne
+    @NotBlank
+    @Size(max=100)
+    private String building;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_campus", referencedColumnName="id")
     private Campus campus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_lesson_session", referencedColumnName="id")
+    private LessonSession lessonSession;
 
     public Room() {
     }
 
-    public Room(int id, String material, String className, String roomName, Campus campus) {
+    public Room(int id, String material, String className, String roomName, String building, Campus campus) {
         this.id = id;
         this.material = material;
         this.className = className;
         this.roomName = roomName;
+        this.building = building;
         this.campus = campus;
     }
 
@@ -72,11 +83,27 @@ public class Room {
         this.roomName = roomName;
     }
 
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
     public Campus getCampus() {
         return campus;
     }
 
     public void setCampus(Campus campus) {
         this.campus = campus;
+    }
+
+    public LessonSession getLessonSession() {
+        return lessonSession;
+    }
+
+    public void setLessonSession(LessonSession lessonSession) {
+        this.lessonSession = lessonSession;
     }
 }

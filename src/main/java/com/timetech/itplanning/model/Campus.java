@@ -1,11 +1,11 @@
 package com.timetech.itplanning.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 
 @Entity
 @Table(name = "campus")
@@ -18,6 +18,17 @@ public class Campus {
     @NotBlank
     @Size(max=100)
     private String location;
+
+    @ManyToMany
+    @JoinTable(name="campus_formation",
+            joinColumns=@JoinColumn(name="id_campus", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="id_formation", referencedColumnName="id")
+    )
+    private List<Formation> formations;
+
+    @NotNull
+    @OneToMany(mappedBy = "campus")
+    private List<Room> rooms;
 
     public Campus() {
     }
@@ -41,5 +52,21 @@ public class Campus {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Formation> getFormations() {
+        return formations;
+    }
+
+    public void setFormations(List<Formation> formations) {
+        this.formations = formations;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 }

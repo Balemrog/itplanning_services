@@ -27,6 +27,10 @@ public class Lesson {
     private Date duration;
 
     @NotNull
+    @OneToMany(mappedBy = "lesson")
+    private List<LessonSession> lessonSessions;
+
+    @NotNull
     @ManyToOne
     private Teacher teacher;
 
@@ -34,24 +38,17 @@ public class Lesson {
     @ManyToOne
     private Room room;
 
-    @ManyToMany
-    @JoinTable(name="lesson_skill",
-            joinColumns=@JoinColumn(name="idLesson", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="idSkill", referencedColumnName="id")
-    )
-    private List<Skill> lessonSkills;
 
     public Lesson() {
     }
 
-    public Lesson(int id, String label, Date date, Date duration, Teacher teacher, Room room, List<Skill> lessonSkills) {
+    public Lesson(int id, String label, Date date, Date duration, Teacher teacher, Room room) {
         this.id = id;
         this.label = label;
         this.date = date;
         this.duration = duration;
         this.teacher = teacher;
         this.room = room;
-        this.lessonSkills = lessonSkills;
     }
 
     public int getId() {
@@ -100,13 +97,5 @@ public class Lesson {
 
     public void setRoom(Room room) {
         this.room = room;
-    }
-
-    public List<Skill> getLessonSkills() {
-        return lessonSkills;
-    }
-
-    public void setLessonSkills(List<Skill> lessonSkills) {
-        this.lessonSkills = lessonSkills;
     }
 }
