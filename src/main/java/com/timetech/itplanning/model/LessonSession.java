@@ -23,7 +23,7 @@ public class LessonSession {
     private Date duration;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_lesson", referencedColumnName="id")
+    @JoinColumn(name="lesson_id", referencedColumnName="id")
     private Lesson lesson;
 
     @NotNull
@@ -33,4 +33,9 @@ public class LessonSession {
     @NotNull
     @OneToMany(mappedBy = "lessonSession")
     private List<Room> rooms;
+
+    @NotNull
+    @OneToOne(optional=false)
+    @JoinColumn(name="teacher_id", nullable=false, updatable=false)
+    private Teacher teacher;
 }

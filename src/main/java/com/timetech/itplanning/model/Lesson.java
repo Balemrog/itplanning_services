@@ -21,34 +21,23 @@ public class Lesson {
     private String label;
 
     @NotNull
-    private Date date;
-
-    @NotNull
-    private Date duration;
-
-    @NotNull
     @OneToMany(mappedBy = "lesson")
     private List<LessonSession> lessonSessions;
 
     @NotNull
-    @ManyToOne
-    private Teacher teacher;
-
-    @NotNull
-    @ManyToOne
-    private Room room;
-
+    @ManyToMany
+    @JoinTable(name="lesson_teachers",
+            joinColumns=@JoinColumn(name="lesson_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="teacher_id", referencedColumnName="id")
+    )
+    private List<Teacher> teachers;
 
     public Lesson() {
     }
 
-    public Lesson(int id, String label, Date date, Date duration, Teacher teacher, Room room) {
+    public Lesson(int id, String label) {
         this.id = id;
         this.label = label;
-        this.date = date;
-        this.duration = duration;
-        this.teacher = teacher;
-        this.room = room;
     }
 
     public int getId() {
@@ -67,35 +56,19 @@ public class Lesson {
         this.label = label;
     }
 
-    public Date getDate() {
-        return date;
+    public List<LessonSession> getLessonSessions() {
+        return lessonSessions;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setLessonSessions(List<LessonSession> lessonSessions) {
+        this.lessonSessions = lessonSessions;
     }
 
-    public Date getDuration() {
-        return duration;
+    public List<Teacher> getTeachers() {
+        return teachers;
     }
 
-    public void setDuration(Date duration) {
-        this.duration = duration;
-    }
-
-    public Teacher getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
+    public void setTeachers(List<Teacher> teachers) {
+        this.teachers = teachers;
     }
 }

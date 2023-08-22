@@ -21,8 +21,8 @@ public class Campus {
 
     @ManyToMany
     @JoinTable(name="campus_formation",
-            joinColumns=@JoinColumn(name="id_campus", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="id_formation", referencedColumnName="id")
+            joinColumns=@JoinColumn(name="campus_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="formation_id", referencedColumnName="id")
     )
     private List<Formation> formations;
 

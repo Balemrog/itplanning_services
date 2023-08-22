@@ -1,18 +1,18 @@
 package com.timetech.itplanning.service;
 
-import com.timetech.itplanning.dao.LessonRepository;
+import com.timetech.itplanning.dao.LessonSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
 @Profile("default")
-public class LessonServiceImpl implements LessonService{
+public class LessonSessionServiceImpl implements LessonSessionService {
 
-    private LessonRepository repository;
+    private LessonSessionRepository repository;
 
     @Autowired
-    public LessonServiceImpl(LessonRepository repository){
+    public LessonSessionServiceImpl(LessonSessionRepository repository){
         this.repository = repository;
     }
 }

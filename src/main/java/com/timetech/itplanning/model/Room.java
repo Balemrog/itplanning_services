@@ -32,11 +32,11 @@ public class Room {
     private String building;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_campus", referencedColumnName="id")
+    @JoinColumn(name="campus_id", referencedColumnName="id")
     private Campus campus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_lesson_session", referencedColumnName="id")
+    @JoinColumn(name="lesson_session_id", referencedColumnName="id")
     private LessonSession lessonSession;
 
     public Room() {

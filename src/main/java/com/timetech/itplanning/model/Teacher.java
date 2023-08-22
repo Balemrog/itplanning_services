@@ -22,22 +22,28 @@ public class Teacher {
     @NotNull
     private Boolean isEmployee;
 
+    @NotNull
+    @OneToOne(optional=false, mappedBy="teacher")
+    private LessonSession lessonSession;
+
     @ManyToMany
     @JoinTable(name="demand_teacher",
-            joinColumns=@JoinColumn(name="idDemand", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="idTeacher", referencedColumnName="id")
+            joinColumns=@JoinColumn(name="teacher_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="demand_id", referencedColumnName="id")
     )
     private List<Demand> demands;
+
+    @ManyToMany(mappedBy = "teachers")
+    private List<Lesson> lessons;
 
     public Teacher() {
     }
 
-    public Teacher(int id, String firstName, String lastName, Boolean isEmployee, List<Demand> demands) {
+    public Teacher(int id, String firstName, String lastName, Boolean isEmployee) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isEmployee = isEmployee;
-        this.demands = demands;
     }
 
     public int getId() {
@@ -78,5 +84,21 @@ public class Teacher {
 
     public void setDemands(List<Demand> demands) {
         this.demands = demands;
+    }
+
+    public LessonSession getLessonSession() {
+        return lessonSession;
+    }
+
+    public void setLessonSession(LessonSession lessonSession) {
+        this.lessonSession = lessonSession;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 }

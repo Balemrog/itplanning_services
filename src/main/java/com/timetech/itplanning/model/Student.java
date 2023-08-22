@@ -23,11 +23,11 @@ public class Student {
     private Modality modality;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_formation", referencedColumnName="id")
+    @JoinColumn(name="formation_id", referencedColumnName="id")
     private Formation formation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_lesson_session", referencedColumnName="id")
+    @JoinColumn(name="lesson_session_id", referencedColumnName="id")
     private LessonSession lessonSession;
 
     public Student(){}
