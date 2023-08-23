@@ -39,7 +39,6 @@ public class TeacherController {
                 .body(teacher);
     }
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Teacher>> getAllTeachers() {
         List<Teacher> teachers = service.getAllTeacher();
