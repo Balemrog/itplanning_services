@@ -40,12 +40,11 @@ public class TeacherController {
     }
 
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Teacher>> getAllTeachers() {
+    public ResponseEntity<Map<String, List<Teacher>>> getAllTeachers() {
         List<Teacher> teachers = service.getAllTeacher();
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(teachers);
-/*        return Collections.singletonMap("data",teachers);*/
+                .body(Collections.singletonMap("data",teachers));
     }
 
     @GetMapping("/teacher/{id}")
