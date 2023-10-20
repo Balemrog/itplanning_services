@@ -9,5 +9,6 @@ public interface TeacherService {
     List<Teacher> getAllTeacher();
     Teacher getTeacherById(Integer id);
     void saveTeacher(Teacher teacher);
+    void saveTeacher(Teacher teacher, Integer id);
     void deleteTeacher(Integer id);
 }

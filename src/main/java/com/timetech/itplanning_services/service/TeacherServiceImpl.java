@@ -35,6 +35,12 @@ public class TeacherServiceImpl implements TeacherService{
     }
 
     @Override
+    public void saveTeacher(Teacher teacher, Integer id) {
+        Teacher dbTeacher = getTeacherById(id);
+//        repository.save(teacher, id);
+    }
+
+    @Override
     public void deleteTeacher(Integer id) {
         repository.deleteById(id);
     }

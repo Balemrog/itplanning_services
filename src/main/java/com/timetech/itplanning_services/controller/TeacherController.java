@@ -22,43 +22,48 @@ public class TeacherController {
         this.service = service;
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello World";
-    }
-
-    @PostMapping("/teacher")
-    public ResponseEntity<Teacher> createTeacher(@Valid @RequestBody final Teacher teacher) {
-        System.out.println("createTeacher : " + teacher);
+    @PostMapping(path = "/teacher", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Teacher> createTeacher(@Valid @RequestBody Teacher teacher) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(teacher);
     }
 
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Teacher>> getAllTeachers() {
+    public ResponseEntity<Map<String, List<Teacher>>> getAllTeachers() {
         List<Teacher> teachers = service.getAllTeacher();
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(teachers);
-/*        return Collections.singletonMap("data",teachers);*/
+                .body(Collections.singletonMap("data",teachers));
     }
 
-    @GetMapping("/teacher/{id}")
-    public Teacher getTeacherById(@PathVariable final Integer id) {
-        System.out.println(id);
-        return service.getTeacherById(id);
+    @GetMapping(path = "/teacher/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Teacher> getTeacherById(@PathVariable("id") Integer id) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(service.getTeacherById(id));
     }
 
-    @PatchMapping("/teacher")
-    public void patchTeacher(@RequestBody final Teacher teacher) {
-        System.out.println("patchTeacher" + teacher);
-        service.saveTeacher(teacher);
-    }
-
-    @DeleteMapping("/teacher/{id}")
-    public void deleteTeacher(@PathVariable final Integer id) {
-        System.out.println("deleteTeacher" + id);
+    @DeleteMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteTeacher(@PathVariable("id") Integer id) {
         service.deleteTeacher(id);
+        return ResponseEntity.ok("resource deleted");
+    }
+
+    @PutMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> saveResource(
+            @RequestBody Teacher teacher,
+            @PathVariable("id") Integer id) {
+//        service.updateTeacher(teacher, id);
+        return ResponseEntity.ok("resource saved");
+    }
+
+    @PatchMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> partialUpdateGeneric(
+            @RequestBody Map<String, Object> updates,
+            @PathVariable("id") String id) {
+//        updates.put("address", "5th avenue");
+//        service.partialUpdateTeacher(updates, id);
+        return ResponseEntity.ok("resource updated");
     }
 }
