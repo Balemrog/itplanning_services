@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class FormationServiceImpl implements FormationService{
 
-    private FormationRepository repository;
+    private final FormationRepository repository;
 
     @Autowired
     public FormationServiceImpl(FormationRepository repository){
@@ -32,5 +32,10 @@ public class FormationServiceImpl implements FormationService{
     @Override
     public Formation saveFormation(Formation formation) {
         return repository.save(formation);
+    }
+
+    @Override
+    public void deleteFormation(Integer id) {
+        repository.deleteById(id);
     }
 }

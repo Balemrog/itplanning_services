@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class StudentServiceImpl implements StudentService{
 
-    private StudentRepository repository;
+    private final StudentRepository repository;
 
     @Autowired
     public StudentServiceImpl(StudentRepository repository){
@@ -32,5 +32,10 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student saveStudent(Student student) {
         return repository.save(student);
+    }
+
+    @Override
+    public void deleteStudent(Integer id) {
+        repository.deleteById(id);
     }
 }

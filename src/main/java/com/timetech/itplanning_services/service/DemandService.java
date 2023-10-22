@@ -9,4 +9,5 @@ public interface DemandService {
     List<Demand> getAllDemand();
     Demand getDemandById(Integer id);
     Demand saveDemand(Demand demand);
+    void deleteDemand(Integer id);
 }

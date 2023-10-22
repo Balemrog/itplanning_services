@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class LessonServiceImpl implements LessonService{
 
-    private LessonRepository repository;
+    private final LessonRepository repository;
 
     @Autowired
     public LessonServiceImpl(LessonRepository repository){
@@ -32,5 +32,10 @@ public class LessonServiceImpl implements LessonService{
     @Override
     public Lesson saveLesson(Lesson lesson) {
         return repository.save(lesson);
+    }
+
+    @Override
+    public void deleteLesson(Integer id) {
+        repository.deleteById(id);
     }
 }

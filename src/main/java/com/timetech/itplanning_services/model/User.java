@@ -37,23 +37,20 @@ public class User {
     public User(){
     }
 
-    public User(int id, String login, String password, Role role) {
-        this.id = id;
+    public User(String login, String password, Role role) {
         this.login = login;
         this.password = password;
         this.role = role;
     }
 
-    public User(int id, String login, String password, Role role, Student student) {
-        this.id = id;
+    public User(String login, String password, Role role, Student student) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.student = student;
     }
 
-    public User(int id, String login, String password, Role role, Teacher teacher) {
-        this.id = id;
+    public User(String login, String password, Role role, Teacher teacher) {
         this.login = login;
         this.password = password;
         this.role = role;

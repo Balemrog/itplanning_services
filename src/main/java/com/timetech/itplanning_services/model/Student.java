@@ -40,8 +40,7 @@ public class Student {
 
     public Student(){}
 
-    public Student(int id, String firstName, String lastName, Modality modality) {
-        this.id = id;
+    public Student(String firstName, String lastName, Modality modality) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.modality = modality;

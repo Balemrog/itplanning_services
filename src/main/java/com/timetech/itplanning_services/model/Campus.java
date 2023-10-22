@@ -31,8 +31,7 @@ public class Campus {
     public Campus() {
     }
 
-    public Campus(int id, String location) {
-        this.id = id;
+    public Campus(String location) {
         this.location = location;
     }
 

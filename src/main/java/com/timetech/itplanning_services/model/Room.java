@@ -38,8 +38,14 @@ public class Room {
     public Room() {
     }
 
-    public Room(int id, String material, String className, String roomName, String building, Campus campus) {
-        this.id = id;
+    public Room(String material, String className, String roomName, String building) {
+        this.material = material;
+        this.className = className;
+        this.roomName = roomName;
+        this.building = building;
+    }
+
+    public Room(String material, String className, String roomName, String building, Campus campus) {
         this.material = material;
         this.className = className;
         this.roomName = roomName;

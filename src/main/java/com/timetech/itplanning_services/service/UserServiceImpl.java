@@ -13,7 +13,7 @@ import java.util.List;
 @Profile("default")
 public class UserServiceImpl implements UserService{
 
-    private UserRepository repository;
+    private final UserRepository repository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -41,6 +41,11 @@ public class UserServiceImpl implements UserService{
 //        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Integer id) {
+        repository.deleteById(id);
     }
 
 //    @Override

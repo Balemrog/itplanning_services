@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class CampusServiceImpl implements CampusService{
 
-    private CampusRepository repository;
+    private final CampusRepository repository;
 
     @Autowired
     public CampusServiceImpl(CampusRepository repository){
@@ -32,5 +32,10 @@ public class CampusServiceImpl implements CampusService{
     @Override
     public Campus saveCampus(Campus campus) {
         return repository.save(campus);
+    }
+
+    @Override
+    public void deleteCampus(Integer id) {
+        repository.deleteById(id);
     }
 }

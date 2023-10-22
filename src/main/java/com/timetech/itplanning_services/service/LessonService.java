@@ -9,4 +9,5 @@ public interface LessonService {
     List<Lesson> getAllLesson();
     Lesson getLessonById(Integer id);
     Lesson saveLesson(Lesson lesson);
+    void deleteLesson(Integer id);
 }

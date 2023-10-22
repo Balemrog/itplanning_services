@@ -9,4 +9,5 @@ public interface UserService {
     User getUserByLogin(String login);
     List<User> getAllMembers();
     User saveUser(User user);
+    void deleteUser(Integer id);
 }

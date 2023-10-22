@@ -9,4 +9,5 @@ public interface FormationService {
     List<Formation> getAllFormation();
     Formation getFormationById(Integer id);
     Formation saveFormation(Formation formation);
+    void deleteFormation(Integer id);
 }

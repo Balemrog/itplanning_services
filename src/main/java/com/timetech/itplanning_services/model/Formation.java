@@ -29,8 +29,11 @@ public class Formation {
     public Formation() {
     }
 
-    public Formation(int id, String label, List<Student> students) {
-        this.id = id;
+    public Formation(String label) {
+        this.label = label;
+    }
+
+    public Formation(String label, List<Student> students) {
         this.label = label;
         this.students = students;
     }

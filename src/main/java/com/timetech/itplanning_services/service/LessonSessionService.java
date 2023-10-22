@@ -9,4 +9,5 @@ public interface LessonSessionService {
     List<LessonSession> getAllLessonSession();
     LessonSession getLessonSessionById(Integer id);
     LessonSession saveLessonSession(LessonSession lessonSession);
+    void deleteLessonSession(Integer id);
 }

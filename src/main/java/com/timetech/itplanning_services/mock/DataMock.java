@@ -40,11 +40,11 @@ public class DataMock implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Teacher teacher1 = new Teacher("Stephane", "Gobin", true);
         teacherService.saveTeacher(teacher1);
-        Campus campus1 = new Campus(1, "Nantes");
+        Campus campus1 = new Campus("Nantes");
         campusService.saveCampus(campus1);
-        User user = new User(1, "planning@mail", "password", Role.SERVICE_PLANNING);
+        User user = new User("planning@mail", "password", Role.SERVICE_PLANNING);
         userService.saveUser(user);
-        User user2 = new User(2, "stephane@mail", "password", Role.TEACHER);
+        User user2 = new User("stephane@mail", "password", Role.TEACHER);
         userService.saveUser(user2);
 
     }

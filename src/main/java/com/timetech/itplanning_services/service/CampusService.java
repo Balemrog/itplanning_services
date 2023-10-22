@@ -9,4 +9,5 @@ public interface CampusService {
     List<Campus> getAllCampus();
     Campus getCampusById(Integer id);
     Campus saveCampus(Campus campus);
+    void deleteCampus(Integer id);
 }

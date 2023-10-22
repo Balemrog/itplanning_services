@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class DemandServiceImpl implements DemandService{
 
-    private DemandRepository repository;
+    private final DemandRepository repository;
 
     @Autowired
     public DemandServiceImpl(DemandRepository repository){
@@ -32,5 +32,10 @@ public class DemandServiceImpl implements DemandService{
     @Override
     public Demand saveDemand(Demand demand) {
         return repository.save(demand);
+    }
+
+    @Override
+    public void deleteDemand(Integer id) {
+        repository.deleteById(id);
     }
 }

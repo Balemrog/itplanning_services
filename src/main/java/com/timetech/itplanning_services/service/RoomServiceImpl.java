@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class RoomServiceImpl implements RoomService{
 
-    private RoomRepository repository;
+    private final RoomRepository repository;
 
     @Autowired
     public RoomServiceImpl(RoomRepository repository){
@@ -33,5 +33,10 @@ public class RoomServiceImpl implements RoomService{
     @Override
     public Room saveRoom(Room room) {
         return repository.save(room);
+    }
+
+    @Override
+    public void deleteRoom(Integer id) {
+        repository.deleteById(id);
     }
 }
