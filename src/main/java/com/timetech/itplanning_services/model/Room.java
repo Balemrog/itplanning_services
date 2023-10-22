@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 public class Room {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank

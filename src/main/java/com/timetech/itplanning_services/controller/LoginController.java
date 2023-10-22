@@ -26,7 +26,6 @@ public class LoginController {
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createTeacher(@RequestBody LoginDto loginDto) {
-        System.out.println("jsuis rentrer ici" + loginDto);
         User user = service.getUserByLogin(loginDto.getUsername());
         boolean isCorrectPassword = passwordEncoder.matches(loginDto.getPassword(), user.getPassword());
         if (isCorrectPassword) {

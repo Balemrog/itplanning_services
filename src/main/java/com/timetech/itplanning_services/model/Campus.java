@@ -11,7 +11,7 @@ import java.util.List;
 public class Campus {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank

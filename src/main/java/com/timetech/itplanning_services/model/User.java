@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank

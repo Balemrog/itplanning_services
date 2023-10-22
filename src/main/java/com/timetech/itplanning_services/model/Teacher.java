@@ -12,13 +12,13 @@ import jakarta.validation.constraints.NotNull;
 public class Teacher {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     private String firstName;
 
-    @NotBlank
+    @NotNull
     private String lastName;
 
     @NotNull
@@ -44,8 +44,7 @@ public class Teacher {
     public Teacher() {
     }
 
-    public Teacher(int id, String firstName, String lastName, Boolean isEmployee) {
-        this.id = id;
+    public Teacher(String firstName, String lastName, Boolean isEmployee) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.isEmployee = isEmployee;
@@ -75,11 +74,11 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public Boolean getEmployee() {
+    public Boolean getIsEmployee() {
         return isEmployee;
     }
 
-    public void setEmployee(Boolean isEmployee) {
+    public void setIsEmployee(Boolean isEmployee) {
         this.isEmployee = isEmployee;
     }
 
@@ -113,5 +112,19 @@ public class Teacher {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isEmployee=" + isEmployee +
+                ", lessonSession=" + lessonSession +
+                ", demands=" + demands +
+                ", lessons=" + lessons +
+                ", user=" + user +
+                '}';
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public class Formation {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank

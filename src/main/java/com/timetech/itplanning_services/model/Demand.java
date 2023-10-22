@@ -10,7 +10,7 @@ import java.util.List;
 public class Demand {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotBlank
