@@ -30,7 +30,7 @@ public class CampusServiceImpl implements CampusService{
     }
 
     @Override
-    public void saveCampus(Campus campus) {
-        repository.save(campus);
+    public Campus saveCampus(Campus campus) {
+        return repository.save(campus);
     }
 }

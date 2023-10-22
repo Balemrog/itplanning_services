@@ -34,13 +34,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void saveUser(User user) {
+    public User saveUser(User user) {
 //        if (emailExist(accountDto.getEmail())) {
 //            throw new EmailExistsException(
 //                    "There is an account with that email adress:" + accountDto.getEmail());
 //        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        repository.save(user);
+        return repository.save(user);
     }
 
 //    @Override

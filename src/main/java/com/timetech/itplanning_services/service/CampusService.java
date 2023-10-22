@@ -8,5 +8,5 @@ public interface CampusService {
 
     List<Campus> getAllCampus();
     Campus getCampusById(Integer id);
-    void saveCampus(Campus campus);
+    Campus saveCampus(Campus campus);
 }

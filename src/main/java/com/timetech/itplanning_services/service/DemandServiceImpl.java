@@ -30,7 +30,7 @@ public class DemandServiceImpl implements DemandService{
     }
 
     @Override
-    public void saveDemand(Demand demand) {
-        repository.save(demand);
+    public Demand saveDemand(Demand demand) {
+        return repository.save(demand);
     }
 }

@@ -8,5 +8,5 @@ public interface LessonService {
 
     List<Lesson> getAllLesson();
     Lesson getLessonById(Integer id);
-    void saveLesson(Lesson lesson);
+    Lesson saveLesson(Lesson lesson);
 }

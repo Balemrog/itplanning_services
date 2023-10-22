@@ -8,5 +8,5 @@ public interface RoomService {
 
     List<Room> getAllRoom();
     Room getRoomById(Integer id);
-    void saveRoom(Room room);
+    Room saveRoom(Room room);
 }

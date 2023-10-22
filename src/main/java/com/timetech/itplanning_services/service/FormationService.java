@@ -8,5 +8,5 @@ public interface FormationService {
 
     List<Formation> getAllFormation();
     Formation getFormationById(Integer id);
-    void saveFormation(Formation formation);
+    Formation saveFormation(Formation formation);
 }

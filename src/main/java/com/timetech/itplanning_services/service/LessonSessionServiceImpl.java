@@ -30,7 +30,7 @@ public class LessonSessionServiceImpl implements LessonSessionService {
     }
 
     @Override
-    public void saveLessonSession(LessonSession lessonSession) {
-        repository.save(lessonSession);
+    public LessonSession saveLessonSession(LessonSession lessonSession) {
+        return repository.save(lessonSession);
     }
 }

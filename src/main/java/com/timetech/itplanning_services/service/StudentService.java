@@ -8,5 +8,5 @@ public interface StudentService {
 
     List<Student> getAllStudent();
     Student getStudentById(Integer id);
-    void saveStudent(Student student);
+    Student saveStudent(Student student);
 }

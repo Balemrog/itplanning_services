@@ -8,5 +8,5 @@ public interface DemandService {
 
     List<Demand> getAllDemand();
     Demand getDemandById(Integer id);
-    void saveDemand(Demand demand);
+    Demand saveDemand(Demand demand);
 }

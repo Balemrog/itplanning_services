@@ -30,7 +30,7 @@ public class FormationServiceImpl implements FormationService{
     }
 
     @Override
-    public void saveFormation(Formation formation) {
-        repository.save(formation);
+    public Formation saveFormation(Formation formation) {
+        return repository.save(formation);
     }
 }

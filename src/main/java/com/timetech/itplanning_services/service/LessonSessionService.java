@@ -8,5 +8,5 @@ public interface LessonSessionService {
 
     List<LessonSession> getAllLessonSession();
     LessonSession getLessonSessionById(Integer id);
-    void saveLessonSession(LessonSession lessonSession);
+    LessonSession saveLessonSession(LessonSession lessonSession);
 }
