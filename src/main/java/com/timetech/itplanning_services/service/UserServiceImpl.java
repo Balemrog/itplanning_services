@@ -1,7 +1,6 @@
 package com.timetech.itplanning_services.service;
 
 import com.timetech.itplanning_services.dao.UserRepository;
-import com.timetech.itplanning_services.model.Teacher;
 import com.timetech.itplanning_services.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

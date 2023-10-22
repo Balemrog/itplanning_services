@@ -4,7 +4,6 @@ import com.timetech.itplanning_services.dto.LoginDto;
 import com.timetech.itplanning_services.dto.UserDto;
 import com.timetech.itplanning_services.model.User;
 import com.timetech.itplanning_services.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

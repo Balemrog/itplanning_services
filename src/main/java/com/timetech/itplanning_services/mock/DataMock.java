@@ -3,8 +3,6 @@ package com.timetech.itplanning_services.mock;
 import com.timetech.itplanning_services.model.*;
 import com.timetech.itplanning_services.service.*;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
