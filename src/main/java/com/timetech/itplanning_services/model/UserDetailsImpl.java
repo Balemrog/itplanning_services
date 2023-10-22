@@ -16,12 +16,19 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(User user){
         this.user = user;
-
-        if(user.getRole() == Role.SERVICE_PLANNING) {
-            this.authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"),
-                    new SimpleGrantedAuthority("ROLE_ADMIN"));
-        }else {
-            this.authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+        switch (user.getRole()) {
+            case SERVICE_PLANNING:
+                this.authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_SERVICE_PLANNING"),
+                        new SimpleGrantedAuthority("ROLE_TEACHER"),
+                        new SimpleGrantedAuthority("ROLE_STUDENT"));
+                break;
+            case TEACHER:
+                this.authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_TEACHER"),
+                        new SimpleGrantedAuthority("ROLE_STUDENT"));
+                break;
+            default:
+                this.authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_STUDENT"));
+                break;
         }
     }
 

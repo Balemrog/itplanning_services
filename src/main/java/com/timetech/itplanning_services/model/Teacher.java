@@ -1,6 +1,8 @@
 package com.timetech.itplanning_services.model;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,6 +36,10 @@ public class Teacher {
 
     @ManyToMany(mappedBy = "teachers")
     private List<Lesson> lessons;
+
+    @OneToOne(mappedBy="teacher")
+    @JsonIgnore
+    private User user;
 
     public Teacher() {
     }
@@ -73,8 +79,8 @@ public class Teacher {
         return isEmployee;
     }
 
-    public void setEmployee(Boolean employee) {
-        isEmployee = employee;
+    public void setEmployee(Boolean isEmployee) {
+        this.isEmployee = isEmployee;
     }
 
     public List<Demand> getDemands() {
@@ -99,5 +105,13 @@ public class Teacher {
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

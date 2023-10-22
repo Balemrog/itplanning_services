@@ -1,6 +1,8 @@
 package com.timetech.itplanning_services.model;
 
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -24,6 +26,10 @@ public class Student {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="formation_id", referencedColumnName="id")
     private Formation formation;
+
+    @OneToOne(mappedBy="student")
+    @JsonIgnore
+    private User user;
 
     @ManyToMany
     @JoinTable(name="student_lesson_session",
@@ -79,6 +85,14 @@ public class Student {
 
     public void setFormation(Formation formation) {
         this.formation = formation;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<LessonSession> getLessonSessions() {

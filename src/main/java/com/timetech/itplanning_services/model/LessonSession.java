@@ -28,9 +28,14 @@ public class LessonSession {
     @ManyToMany(mappedBy = "lessonSessions")
     private List<Student> students;
 
+//    @NotNull
+//    @OneToMany(mappedBy = "lessonSession")
+//    private List<Room> rooms;
+
     @NotNull
-    @OneToMany(mappedBy = "lessonSession")
-    private List<Room> rooms;
+    @OneToOne(optional=false)
+    @JoinColumn(name="room_id", nullable=false, updatable=false)
+    private Room room;
 
     @NotNull
     @OneToOne(optional=false)
@@ -39,13 +44,13 @@ public class LessonSession {
 
     public LessonSession() {}
 
-    public LessonSession(int id, Date sessionDate, Date duration, Lesson lesson, List<Student> students, List<Room> rooms, Teacher teacher) {
+    public LessonSession(int id, Date sessionDate, Date duration, Lesson lesson, List<Student> students, Room room, Teacher teacher) {
         this.id = id;
         this.sessionDate = sessionDate;
         this.duration = duration;
         this.lesson = lesson;
         this.students = students;
-        this.rooms = rooms;
+        this.room = room;
         this.teacher = teacher;
     }
 
@@ -89,12 +94,20 @@ public class LessonSession {
         this.students = students;
     }
 
-    public List<Room> getRooms() {
-        return rooms;
+//    public List<Room> getRooms() {
+//        return rooms;
+//    }
+//
+//    public void setRooms(List<Room> rooms) {
+//        this.rooms = rooms;
+//    }
+
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public Teacher getTeacher() {

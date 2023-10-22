@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,9 +36,10 @@ public class TeacherController {
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, List<Teacher>>> getAllTeachers() {
         List<Teacher> teachers = service.getAllTeacher();
+        System.out.println("HEYYYYY");
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Collections.singletonMap("data",teachers));
+                .body(Collections.singletonMap("data", teachers));
     }
 
     @GetMapping(path = "/teacher/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

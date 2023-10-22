@@ -32,8 +32,7 @@ public class Room {
     @JoinColumn(name="campus_id", referencedColumnName="id")
     private Campus campus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="lesson_session_id", referencedColumnName="id")
+    @OneToOne(mappedBy="room")
     private LessonSession lessonSession;
 
     public Room() {
