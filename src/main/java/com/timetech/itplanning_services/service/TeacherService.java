@@ -1,6 +1,5 @@
 package com.timetech.itplanning_services.service;
 
-import com.timetech.itplanning_services.dto.TeacherDto;
 import com.timetech.itplanning_services.model.Teacher;
 
 import java.util.List;

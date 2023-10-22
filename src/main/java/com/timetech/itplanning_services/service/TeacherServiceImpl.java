@@ -12,7 +12,7 @@ import java.util.List;
 @Profile("default")
 public class TeacherServiceImpl implements TeacherService{
 
-    private TeacherRepository repository;
+    private final TeacherRepository repository;
 
     @Autowired
     public TeacherServiceImpl(TeacherRepository repository){
