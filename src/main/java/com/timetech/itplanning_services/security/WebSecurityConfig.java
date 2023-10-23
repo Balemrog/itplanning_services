@@ -1,5 +1,6 @@
 package com.timetech.itplanning_services.security;
 
+import com.timetech.itplanning_services.model.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -27,8 +28,9 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("SERVICE_PLANNING")
-                        .requestMatchers("/api/**").hasAnyRole("SERVICE_PLANNING", "TEACHER", "STUDENT")
+                        .requestMatchers("/api/admin/**").hasRole(Role.SERVICE_PLANNING.getValue())
+                        .requestMatchers("/api/teacher/**").hasRole(Role.TEACHER.getValue())
+                        .requestMatchers("/api/**").hasAnyRole(Role.SERVICE_PLANNING.getValue(), Role.TEACHER.getValue(), Role.STUDENT.getValue())
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
