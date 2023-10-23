@@ -28,10 +28,6 @@ public class LessonSession {
     @ManyToMany(mappedBy = "lessonSessions")
     private List<Student> students;
 
-//    @NotNull
-//    @OneToMany(mappedBy = "lessonSession")
-//    private List<Room> rooms;
-
     @NotNull
     @OneToOne(optional=false)
     @JoinColumn(name="room_id", nullable=false, updatable=false)
@@ -44,8 +40,7 @@ public class LessonSession {
 
     public LessonSession() {}
 
-    public LessonSession(int id, Date sessionDate, Date duration, Lesson lesson, List<Student> students, Room room, Teacher teacher) {
-        this.id = id;
+    public LessonSession(Date sessionDate, Date duration, Lesson lesson, List<Student> students, Room room, Teacher teacher) {
         this.sessionDate = sessionDate;
         this.duration = duration;
         this.lesson = lesson;

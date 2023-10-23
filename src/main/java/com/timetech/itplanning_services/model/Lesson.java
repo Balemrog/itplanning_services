@@ -1,7 +1,6 @@
 package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -15,15 +14,13 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     @Size(max=100)
     private String label;
 
-    @NotNull
     @OneToMany(mappedBy = "lesson")
     private List<LessonSession> lessonSessions;
 
-    @NotNull
     @ManyToMany
     @JoinTable(name="lesson_teachers",
             joinColumns=@JoinColumn(name="lesson_id", referencedColumnName="id"),
@@ -34,8 +31,7 @@ public class Lesson {
     public Lesson() {
     }
 
-    public Lesson(int id, String label) {
-        this.id = id;
+    public Lesson(String label) {
         this.label = label;
     }
 

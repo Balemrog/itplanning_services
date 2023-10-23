@@ -29,7 +29,7 @@ public class RoomController {
     }
 
     @GetMapping(path = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<Room>>> getAllRooms() {
+    public ResponseEntity<Map<String, List<Room>>> getAllRoom() {
         List<Room> rooms = service.getAllRoom();
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -34,4 +34,16 @@ public interface DtoMapper {
     RoomDto toRoomDto(Room room);
 
     Room setRoomWithDto(Room room, RoomDto roomDto);
+
+    Lesson toLesson(LessonDto lessonDto);
+
+    LessonDto toLessonDto(Lesson lesson);
+
+    Lesson setLessonWithDto(Lesson lesson, LessonDto lessonDto);
+
+    Demand toDemand(DemandDto demandDto);
+
+    DemandDto toDemandDto(Demand demand);
+
+    Demand setDemandWithDto(Demand demand, DemandDto demandDto);
 }

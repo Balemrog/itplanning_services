@@ -1,9 +1,9 @@
 package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-
-import java.util.List;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "demand")
@@ -13,23 +13,24 @@ public class Demand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     private String comment;
 
-    @NotBlank
+    @NotNull
     private Status status;
 
-    @ManyToMany(mappedBy = "demands")
-    private List<Teacher> teachers;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="teacher_id", referencedColumnName="id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Teacher teacher;
 
     public Demand() {
     }
 
-    public Demand(int id, String comment, Status status, List<Teacher> teachers) {
-        this.id = id;
+    public Demand(String comment, Status status, Teacher teacher) {
         this.comment = comment;
         this.status = status;
-        this.teachers = teachers;
+        this.teacher = teacher;
     }
 
     public int getId() {
@@ -56,11 +57,11 @@ public class Demand {
         this.status = status;
     }
 
-    public List<Teacher> getTeachers() {
-        return teachers;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeachers(List<Teacher> teachers) {
-        this.teachers = teachers;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

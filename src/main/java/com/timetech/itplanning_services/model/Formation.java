@@ -2,7 +2,6 @@ package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -19,7 +18,6 @@ public class Formation {
     @Size(max=100)
     private String label;
 
-    @NotNull
     @OneToMany(mappedBy = "formation")
     private List<Student> students;
 

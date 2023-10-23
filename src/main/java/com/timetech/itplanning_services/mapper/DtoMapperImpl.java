@@ -138,4 +138,56 @@ public class DtoMapperImpl implements DtoMapper{
         room.setBuilding(roomDto.getBuilding());
         return room;
     }
+
+    @Override
+    public Lesson toLesson(LessonDto lessonDto) {
+        if (lessonDto == null) {
+            return null;
+        }
+        return new Lesson(lessonDto.getLabel());
+    }
+
+    @Override
+    public LessonDto toLessonDto(Lesson lesson) {
+        if (lesson == null) {
+            return null;
+        }
+        return new LessonDto(lesson.getLabel());
+    }
+
+    @Override
+    public Lesson setLessonWithDto(Lesson lesson, LessonDto lessonDto) {
+        if (lessonDto == null || lesson == null) {
+            return null;
+        }
+        lesson.setLabel(lessonDto.getLabel());
+        return lesson;
+    }
+
+    @Override
+    public Demand toDemand(DemandDto demandDto) {
+        if (demandDto == null) {
+            return null;
+        }
+        return new Demand(demandDto.getComment(), demandDto.getStatus(), demandDto.getTeacher());
+    }
+
+    @Override
+    public DemandDto toDemandDto(Demand demand) {
+        if (demand == null) {
+            return null;
+        }
+        return new DemandDto(demand.getComment(), demand.getStatus(), demand.getTeacher());
+    }
+
+    @Override
+    public Demand setDemandWithDto(Demand demand, DemandDto demandDto) {
+        if (demandDto == null || demand == null) {
+            return null;
+        }
+        demand.setComment(demand.getComment());
+        demand.setStatus(demandDto.getStatus());
+        demand.setTeacher(demandDto.getTeacher());
+        return demand;
+    }
 }

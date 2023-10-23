@@ -26,11 +26,7 @@ public class Teacher {
     @OneToOne(mappedBy="teacher")
     private LessonSession lessonSession;
 
-    @ManyToMany
-    @JoinTable(name="demand_teacher",
-            joinColumns=@JoinColumn(name="teacher_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="demand_id", referencedColumnName="id")
-    )
+    @OneToMany(mappedBy = "teacher")
     private List<Demand> demands;
 
     @ManyToMany(mappedBy = "teachers")

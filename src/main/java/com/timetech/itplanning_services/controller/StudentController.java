@@ -29,7 +29,7 @@ public class StudentController {
     }
 
     @GetMapping(path = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<Student>>> getAllStudents() {
+    public ResponseEntity<Map<String, List<Student>>> getAllStudent() {
         List<Student> students = service.getAllStudent();
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)

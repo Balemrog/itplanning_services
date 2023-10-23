@@ -29,7 +29,7 @@ public class TeacherController {
     }
 
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<Teacher>>> getAllTeachers() {
+    public ResponseEntity<Map<String, List<Teacher>>> getAllTeacher() {
         List<Teacher> teachers = service.getAllTeacher();
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -69,13 +69,4 @@ public class TeacherController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(dtoMapper.toTeacherDto(teacher));
     }
-
-//    @PatchMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<?> partialUpdateGeneric(
-//            @RequestBody Map<String, Object> updates,
-//            @PathVariable("id") String id) {
-////        updates.put("address", "5th avenue");
-////        service.partialUpdateTeacher(updates, id);
-//        return ResponseEntity.ok("resource updated");
-//    }
 }

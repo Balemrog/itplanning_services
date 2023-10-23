@@ -41,43 +41,4 @@ public class LoginController {
                     .body(error);
         }
     }
-
-//    @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Map<String, List<Teacher>>> getAllTeachers() {
-//        List<Teacher> teachers = service.getAllTeacher();
-//        Map<String, List<Teacher>> test = Collections.singletonMap("data",teachers);
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .body(Collections.singletonMap("data", teachers));
-//    }
-
-//    @GetMapping(path = "/teacher/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Teacher> getTeacherById(@PathVariable("id") Integer id) {
-//        return ResponseEntity.status(HttpStatus.OK)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .body(service.getTeacherById(id));
-//    }
-
-//    @DeleteMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<?> deleteTeacher(@PathVariable("id") Integer id) {
-//        service.deleteTeacher(id);
-//        return ResponseEntity.ok("resource deleted");
-//    }
-
-//    @PutMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<?> saveResource(
-//            @RequestBody Teacher teacher,
-//            @PathVariable("id") Integer id) {
-////        service.updateTeacher(teacher, id);
-//        return ResponseEntity.ok("resource saved");
-//    }
-
-//    @PatchMapping(path = "/teacher/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<?> partialUpdateGeneric(
-//            @RequestBody Map<String, Object> updates,
-//            @PathVariable("id") String id) {
-////        updates.put("address", "5th avenue");
-////        service.partialUpdateTeacher(updates, id);
-//        return ResponseEntity.ok("resource updated");
-//    }
 }
