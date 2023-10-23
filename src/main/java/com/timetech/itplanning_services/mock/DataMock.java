@@ -1,51 +1,26 @@
 package com.timetech.itplanning_services.mock;
 
-import com.timetech.itplanning_services.model.*;
-import com.timetech.itplanning_services.service.*;
+import com.timetech.itplanning_services.model.Role;
+import com.timetech.itplanning_services.model.User;
+import com.timetech.itplanning_services.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataMock implements CommandLineRunner {
 
-    private CampusService campusService;
-    private DemandService demandService;
-    private FormationService formationService;
-    private LessonService lessonService;
-    private LessonSessionService lessonSessionService;
-    private RoomService roomService;
-    private StudentService studentService;
-    private TeacherService teacherService;
-    private UserService userService;
+    private final UserService service;
 
-
-    public DataMock(CampusService campusService, DemandService demandService, FormationService formationService,
-                    LessonService lessonService, LessonSessionService lessonSessionService, RoomService roomService,
-                    StudentService studentService, TeacherService teacherService, UserService userService) {
-        this.campusService = campusService;
-        this.demandService = demandService;
-        this.formationService = formationService;
-        this.lessonService = lessonService;
-        this.lessonSessionService = lessonSessionService;
-        this.roomService = roomService;
-        this.studentService = studentService;
-        this.teacherService = teacherService;
-        this.userService = userService;
-    }
-
-    public void addDataSetToDb(){
+    public DataMock(UserService userService) {
+        this.service = userService;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        Teacher teacher1 = new Teacher("Stephane", "Gobin", true);
-        teacherService.saveTeacher(teacher1);
-        Campus campus1 = new Campus("Nantes");
-        campusService.saveCampus(campus1);
-        User user = new User("planning@mail", "password", Role.SERVICE_PLANNING);
-        userService.saveUser(user);
-        User user2 = new User("stephane@mail", "password", Role.TEACHER);
-        userService.saveUser(user2);
-
+        String login = "service.planning@campus-eni.fr";
+        if(!service.hasUserWithLogin(login)) {
+            User user = new User(login, "password", Role.SERVICE_PLANNING);
+            service.saveUser(user);
+        }
     }
 }

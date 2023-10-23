@@ -1,10 +1,8 @@
 package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.util.List;
 
 @Entity
 @Table(name = "formation")
@@ -14,23 +12,15 @@ public class Formation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     @Size(max=100)
     private String label;
-
-    @OneToMany(mappedBy = "formation")
-    private List<Student> students;
 
     public Formation() {
     }
 
     public Formation(String label) {
         this.label = label;
-    }
-
-    public Formation(String label, List<Student> students) {
-        this.label = label;
-        this.students = students;
     }
 
     public int getId() {
@@ -47,13 +37,5 @@ public class Formation {
 
     public void setLabel(String label) {
         this.label = label;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
     }
 }

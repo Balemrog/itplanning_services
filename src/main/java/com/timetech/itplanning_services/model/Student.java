@@ -1,12 +1,8 @@
 package com.timetech.itplanning_services.model;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "student")
@@ -16,34 +12,30 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     private String firstName;
 
-    @NotBlank
+    @NotNull
     private String lastName;
 
-    @NotBlank
+    @NotNull
+    @Column(name = "role", columnDefinition = "varchar(20)")
+    @Enumerated(EnumType.STRING)
     private Modality modality;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="formation_id", referencedColumnName="id")
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name="formation_id", referencedColumnName="id", nullable=false)
     private Formation formation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="school_class_id", referencedColumnName="id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
     private SchoolClass schoolClass;
 
     @OneToOne(mappedBy="student")
     @JsonIgnore
     private User user;
-
-    @ManyToMany
-    @JoinTable(name="student_lesson_session",
-            joinColumns=@JoinColumn(name="student_id", referencedColumnName="id"),
-            inverseJoinColumns=@JoinColumn(name="lesson_session_id", referencedColumnName="id")
-    )
-    private List<LessonSession> lessonSessions;
 
     public Student(){}
 
@@ -106,14 +98,6 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public List<LessonSession> getLessonSessions() {
-        return lessonSessions;
-    }
-
-    public void setLessonSessions(List<LessonSession> lessonSessions) {
-        this.lessonSessions = lessonSessions;
     }
 
     public SchoolClass getSchoolClass() {

@@ -17,7 +17,7 @@ public class Room {
     @Size(max=100)
     private String material;
 
-    @NotBlank
+    @NotNull
     @Size(max=100)
     private String roomName;
 
@@ -25,12 +25,10 @@ public class Room {
     @Size(max=100)
     private String building;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="campus_id", referencedColumnName="id")
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name="campus_id", referencedColumnName="id", nullable=false)
     private Campus campus;
-
-    @OneToOne(mappedBy="room")
-    private LessonSession lessonSession;
 
     public Room() {
     }
@@ -86,13 +84,5 @@ public class Room {
 
     public void setCampus(Campus campus) {
         this.campus = campus;
-    }
-
-    public LessonSession getLessonSession() {
-        return lessonSession;
-    }
-
-    public void setLessonSession(LessonSession lessonSession) {
-        this.lessonSession = lessonSession;
     }
 }

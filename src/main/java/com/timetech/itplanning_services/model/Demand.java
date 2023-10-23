@@ -2,8 +2,6 @@ package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "demand")
@@ -19,9 +17,9 @@ public class Demand {
     @NotNull
     private Status status;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="teacher_id", referencedColumnName="id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Teacher teacher;
 
     public Demand() {

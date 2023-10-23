@@ -14,36 +14,40 @@ public class LessonSession {
     private int id;
 
     @NotNull
-    private Date sessionDate;
+    private String label;
 
     @NotNull
-    private Date duration;
+    private Date sessionStartDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="lesson_id", referencedColumnName="id")
+    @NotNull
+    private Date sessionEndDate;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="lesson_id", referencedColumnName="id", nullable = false)
     private Lesson lesson;
 
-
     @NotNull
-    @OneToOne(optional=false)
-    @JoinColumn(name="room_id", nullable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name="room_id", nullable=false)
     private Room room;
 
     @NotNull
-    @OneToOne(optional=false)
-    @JoinColumn(name="school_class_id", nullable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
     private SchoolClass schoolClass;
 
     @NotNull
-    @OneToOne(optional=false)
-    @JoinColumn(name="teacher_id", nullable=false, updatable=false)
+    @ManyToOne(optional=false)
+    @JoinColumn(name="teacher_id", referencedColumnName="id", nullable=false)
     private Teacher teacher;
 
     public LessonSession() {}
 
-    public LessonSession(Date sessionDate, Date duration, Lesson lesson,  Room room, SchoolClass schoolClass, Teacher teacher) {
-        this.sessionDate = sessionDate;
-        this.duration = duration;
+    public LessonSession(String label, Date sessionStartDate, Date sessionEndDate, Lesson lesson,  Room room, SchoolClass schoolClass, Teacher teacher) {
+        this.label = label;
+        this.sessionStartDate = sessionStartDate;
+        this.sessionEndDate = sessionEndDate;
         this.lesson = lesson;
         this.room = room;
         this.schoolClass = schoolClass;
@@ -58,20 +62,28 @@ public class LessonSession {
         this.id = id;
     }
 
-    public Date getSessionDate() {
-        return sessionDate;
+    public String getLabel() {
+        return label;
     }
 
-    public void setSessionDate(Date sessionDate) {
-        this.sessionDate = sessionDate;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public Date getDuration() {
-        return duration;
+    public Date getSessionStartDate() {
+        return sessionStartDate;
     }
 
-    public void setDuration(Date duration) {
-        this.duration = duration;
+    public void setSessionStartDate(Date sessionStartDate) {
+        this.sessionStartDate = sessionStartDate;
+    }
+
+    public Date getSessionEndDate() {
+        return sessionEndDate;
+    }
+
+    public void setSessionEndDate(Date sessionEndDate) {
+        this.sessionEndDate = sessionEndDate;
     }
 
     public Lesson getLesson() {

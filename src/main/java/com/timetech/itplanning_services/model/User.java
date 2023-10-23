@@ -1,7 +1,6 @@
 package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -13,11 +12,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
+    @NotNull
     @Size(max=255)
     private String login;
 
-    @NotBlank
+    @NotNull
     @Size(max=255)
     private String password;
 
@@ -105,15 +104,4 @@ public class User {
         this.teacher = teacher;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", student=" + student +
-                ", teacher=" + teacher +
-                '}';
-    }
 }
