@@ -5,6 +5,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "student")
@@ -27,6 +29,11 @@ public class Student {
     @JoinColumn(name="formation_id", referencedColumnName="id")
     private Formation formation;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="school_class_id", referencedColumnName="id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private SchoolClass schoolClass;
+
     @OneToOne(mappedBy="student")
     @JsonIgnore
     private User user;
@@ -44,6 +51,13 @@ public class Student {
         this.firstName = firstName;
         this.lastName = lastName;
         this.modality = modality;
+    }
+
+    public Student(String firstName, String lastName, Modality modality, SchoolClass schoolClass) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.modality = modality;
+        this.schoolClass = schoolClass;
     }
 
     public int getId() {
@@ -100,5 +114,13 @@ public class Student {
 
     public void setLessonSessions(List<LessonSession> lessonSessions) {
         this.lessonSessions = lessonSessions;
+    }
+
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
 }

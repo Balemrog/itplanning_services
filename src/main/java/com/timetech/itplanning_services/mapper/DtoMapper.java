@@ -46,4 +46,8 @@ public interface DtoMapper {
     DemandDto toDemandDto(Demand demand);
 
     Demand setDemandWithDto(Demand demand, DemandDto demandDto);
+
+    SchoolClassDto toSchoolClassDto(SchoolClass schoolClass);
+
+    SchoolClass setSchoolClassWithDto(SchoolClass schoolClass, SchoolClassDto schoolClassDto);
 }

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "lesson_session")
@@ -24,9 +23,6 @@ public class LessonSession {
     @JoinColumn(name="lesson_id", referencedColumnName="id")
     private Lesson lesson;
 
-    @NotNull
-    @ManyToMany(mappedBy = "lessonSessions")
-    private List<Student> students;
 
     @NotNull
     @OneToOne(optional=false)
@@ -35,17 +31,22 @@ public class LessonSession {
 
     @NotNull
     @OneToOne(optional=false)
+    @JoinColumn(name="school_class_id", nullable=false, updatable=false)
+    private SchoolClass schoolClass;
+
+    @NotNull
+    @OneToOne(optional=false)
     @JoinColumn(name="teacher_id", nullable=false, updatable=false)
     private Teacher teacher;
 
     public LessonSession() {}
 
-    public LessonSession(Date sessionDate, Date duration, Lesson lesson, List<Student> students, Room room, Teacher teacher) {
+    public LessonSession(Date sessionDate, Date duration, Lesson lesson,  Room room, SchoolClass schoolClass, Teacher teacher) {
         this.sessionDate = sessionDate;
         this.duration = duration;
         this.lesson = lesson;
-        this.students = students;
         this.room = room;
+        this.schoolClass = schoolClass;
         this.teacher = teacher;
     }
 
@@ -81,28 +82,20 @@ public class LessonSession {
         this.lesson = lesson;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-//    public List<Room> getRooms() {
-//        return rooms;
-//    }
-//
-//    public void setRooms(List<Room> rooms) {
-//        this.rooms = rooms;
-//    }
-
     public Room getRoom() {
         return room;
     }
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public SchoolClass getSchoolClass() {
+        return schoolClass;
+    }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
     }
 
     public Teacher getTeacher() {

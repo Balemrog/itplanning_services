@@ -21,9 +21,6 @@ public class Formation {
     @OneToMany(mappedBy = "formation")
     private List<Student> students;
 
-    @ManyToMany(mappedBy = "formations")
-    private List<Campus> campusList;
-
     public Formation() {
     }
 

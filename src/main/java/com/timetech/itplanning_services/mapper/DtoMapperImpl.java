@@ -116,7 +116,7 @@ public class DtoMapperImpl implements DtoMapper{
         if (roomDto == null) {
             return null;
         }
-        return new Room(roomDto.getMaterial(), roomDto.getClassName(), roomDto.getRoomName(), roomDto.getBuilding());
+        return new Room(roomDto.getMaterial(), roomDto.getRoomName(), roomDto.getBuilding());
     }
 
     @Override
@@ -124,7 +124,7 @@ public class DtoMapperImpl implements DtoMapper{
         if (room == null) {
             return null;
         }
-        return new RoomDto(room.getMaterial(), room.getClassName(), room.getRoomName(), room.getBuilding());
+        return new RoomDto(room.getMaterial(), room.getRoomName(), room.getBuilding());
     }
 
     @Override
@@ -133,7 +133,6 @@ public class DtoMapperImpl implements DtoMapper{
             return null;
         }
         room.setMaterial(roomDto.getMaterial());
-        room.setClassName(roomDto.getClassName());
         room.setRoomName(roomDto.getRoomName());
         room.setBuilding(roomDto.getBuilding());
         return room;
@@ -185,9 +184,26 @@ public class DtoMapperImpl implements DtoMapper{
         if (demandDto == null || demand == null) {
             return null;
         }
-        demand.setComment(demand.getComment());
+        demand.setComment(demandDto.getComment());
         demand.setStatus(demandDto.getStatus());
         demand.setTeacher(demandDto.getTeacher());
         return demand;
+    }
+
+    @Override
+    public SchoolClassDto toSchoolClassDto(SchoolClass schoolClass) {
+        if (schoolClass == null) {
+            return null;
+        }
+        return new SchoolClassDto(schoolClass.getLabel());
+    }
+
+    @Override
+    public SchoolClass setSchoolClassWithDto(SchoolClass schoolClass, SchoolClassDto schoolClassDto) {
+        if (schoolClassDto == null || schoolClass == null) {
+            return null;
+        }
+        schoolClass.setLabel(schoolClassDto.getLabel());
+        return schoolClass;
     }
 }
