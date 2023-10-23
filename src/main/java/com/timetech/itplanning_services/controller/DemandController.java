@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/teacher")
+@RequestMapping("/api")
 public class DemandController {
 
     private final DemandService service;

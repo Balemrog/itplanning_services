@@ -29,7 +29,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/api/admin/**").hasRole(Role.SERVICE_PLANNING.getValue())
-                        .requestMatchers("/api/teacher/**").hasRole(Role.TEACHER.getValue())
                         .requestMatchers("/api/**").hasAnyRole(Role.SERVICE_PLANNING.getValue(), Role.TEACHER.getValue(), Role.STUDENT.getValue())
                         .anyRequest().authenticated()
                 )
