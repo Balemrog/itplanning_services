@@ -2,6 +2,7 @@ package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -15,10 +16,6 @@ public class Room {
     @NotBlank
     @Size(max=100)
     private String material;
-
-    @NotBlank
-    @Size(max=100)
-    private String className;
 
     @NotBlank
     @Size(max=100)
@@ -38,16 +35,14 @@ public class Room {
     public Room() {
     }
 
-    public Room(String material, String className, String roomName, String building) {
+    public Room(String material, String roomName, String building) {
         this.material = material;
-        this.className = className;
         this.roomName = roomName;
         this.building = building;
     }
 
-    public Room(String material, String className, String roomName, String building, Campus campus) {
+    public Room(String material, String roomName, String building, Campus campus) {
         this.material = material;
-        this.className = className;
         this.roomName = roomName;
         this.building = building;
         this.campus = campus;
@@ -67,14 +62,6 @@ public class Room {
 
     public void setMaterial(String material) {
         this.material = material;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
     }
 
     public String getRoomName() {

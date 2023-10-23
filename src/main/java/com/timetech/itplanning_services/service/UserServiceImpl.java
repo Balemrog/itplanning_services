@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Profile("default")
@@ -24,21 +25,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserByLogin(String login) {
+    public Optional<User> getUserByLogin(String login) {
         return repository.findByLogin(login);
     }
 
     @Override
-    public List<User> getAllMembers() {
+    public List<User> getAllUser() {
         return repository.findAll();
     }
 
     @Override
     public User saveUser(User user) {
-//        if (emailExist(accountDto.getEmail())) {
-//            throw new EmailExistsException(
-//                    "There is an account with that email adress:" + accountDto.getEmail());
-//        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return repository.save(user);
     }
@@ -46,6 +43,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public boolean hasUserWithLogin(String login) {
+        return repository.existsByLogin(login);
+    }
+
+    @Override
+    public Optional<User> validLoginAndPassword(String login, String password) {
+        return getUserByLogin(login).filter(user -> passwordEncoder.matches(password, user.getPassword()));
     }
 
 //    @Override

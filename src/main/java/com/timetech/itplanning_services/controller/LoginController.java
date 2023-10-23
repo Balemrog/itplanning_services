@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class LoginController {
@@ -17,28 +18,19 @@ public class LoginController {
     private final UserService service;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     public LoginController(UserService service){
         this.service = service;
     }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createTeacher(@RequestBody LoginDto loginDto) {
-        User user = service.getUserByLogin(loginDto.getUsername());
-        boolean isCorrectPassword = passwordEncoder.matches(loginDto.getPassword(), user.getPassword());
-        if (isCorrectPassword) {
-            UserDto userDto = new UserDto(user.getId(), user.getLogin(), user.getRole());
+    public ResponseEntity<UserDto> createTeacher(@RequestBody LoginDto loginDto) {
+        Optional<User> userOptional = service.validLoginAndPassword(loginDto.getUsername(), loginDto.getPassword());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             return ResponseEntity.status(HttpStatus.OK)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(userDto);
+                    .body(new UserDto(user.getId(), user.getLogin(), user.getRole()));
         }
-        else {
-            String error = "error: mauvais mdp";
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .body(error);
-        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
