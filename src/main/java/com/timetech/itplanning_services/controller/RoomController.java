@@ -1,8 +1,6 @@
 package com.timetech.itplanning_services.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.timetech.itplanning_services.dto.RoomDto;
-import com.timetech.itplanning_services.mapper.DtoMapper;
 import com.timetech.itplanning_services.model.Room;
 import com.timetech.itplanning_services.model.Views;
 import com.timetech.itplanning_services.service.RoomService;
@@ -22,12 +20,10 @@ import java.util.Map;
 public class RoomController {
 
     private final RoomService service;
-    private final DtoMapper dtoMapper;
 
     @Autowired
-    public RoomController(RoomService service, DtoMapper dtoMapper){
+    public RoomController(RoomService service){
         this.service = service;
-        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping(path = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -68,10 +64,10 @@ public class RoomController {
     }
 
     @PutMapping(path = "/rooms/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RoomDto> updateRoom(@Valid @RequestBody RoomDto roomDto, @PathVariable("id") Integer id) {
-        Room room = service.saveRoom(dtoMapper.setRoomWithDto(service.getRoomById(id), roomDto));
+    @JsonView(Views.Public.class)
+    public ResponseEntity<Room> updateRoom(@Valid @RequestBody Room room) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(dtoMapper.toRoomDto(room));
+                .body(service.saveRoom(room));
     }
 }

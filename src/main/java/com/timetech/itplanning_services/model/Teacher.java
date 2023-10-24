@@ -25,8 +25,7 @@ public class Teacher {
     @NotNull
     private Boolean isEmployee;
 
-    @OneToMany(mappedBy = "teacher")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Demand> demands;
 
     @ManyToMany
@@ -36,7 +35,7 @@ public class Teacher {
     )
     private List<Lesson> lessons;
 
-    @OneToOne(mappedBy="teacher")
+    @OneToOne(mappedBy="teacher", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private User user;
 

@@ -63,6 +63,7 @@ public class StudentController {
     @PostMapping(path = "/students", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createStudent(@Valid @RequestBody Student student) {
         String login = String.format("%1$s.%2$s@eni.fr", student.getFirstName(), student.getLastName());
+        login.toLowerCase();
         if(!userService.hasUserWithLogin(login)) {
             User user = new User(login, "password", Role.STUDENT, student);
             return ResponseEntity.status(HttpStatus.CREATED)

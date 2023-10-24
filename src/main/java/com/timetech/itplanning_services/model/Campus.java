@@ -27,7 +27,7 @@ public class Campus {
     @JsonView(Views.Internal.class)
     private List<Formation> formations;
     
-    @OneToMany(mappedBy = "campus")
+    @OneToMany(mappedBy = "campus", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonView(Views.Internal.class)
     private List<Room> rooms;
 

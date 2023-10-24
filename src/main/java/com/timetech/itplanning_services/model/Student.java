@@ -33,7 +33,7 @@ public class Student {
     @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
     private SchoolClass schoolClass;
 
-    @OneToOne(mappedBy="student")
+    @OneToOne(mappedBy="student", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private User user;
 
