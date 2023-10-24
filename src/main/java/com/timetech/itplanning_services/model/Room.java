@@ -1,9 +1,8 @@
 package com.timetech.itplanning_services.model;
 
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "room")
@@ -11,23 +10,29 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonView(Views.Public.class)
     private int id;
 
-    @NotBlank
-    @Size(max=100)
+    @NotNull
+    @JsonView(Views.Public.class)
     private String material;
 
     @NotNull
-    @Size(max=100)
+    @JsonView(Views.Public.class)
     private String roomName;
 
-    @NotBlank
-    @Size(max=100)
+    @NotNull
+    @JsonView(Views.Public.class)
     private String building;
+
+    //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //    @JsonManagedReference
+    //    @JsonBackReference
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="campus_id", referencedColumnName="id", nullable=false)
+    @JsonView(Views.Public.class)
     private Campus campus;
 
     public Room() {
@@ -78,11 +83,23 @@ public class Room {
         this.building = building;
     }
 
+//    @JsonIgnore
     public Campus getCampus() {
         return campus;
     }
 
     public void setCampus(Campus campus) {
         this.campus = campus;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", material='" + material + '\'' +
+                ", roomName='" + roomName + '\'' +
+                ", building='" + building + '\'' +
+                ", campus=" + campus +
+                '}';
     }
 }

@@ -1,7 +1,5 @@
 package com.timetech.itplanning_services.controller;
 
-import com.timetech.itplanning_services.dto.FormationDto;
-import com.timetech.itplanning_services.mapper.DtoMapper;
 import com.timetech.itplanning_services.model.Formation;
 import com.timetech.itplanning_services.service.FormationService;
 import jakarta.validation.Valid;
@@ -20,12 +18,10 @@ import java.util.Map;
 public class FormationController {
 
     private final FormationService service;
-    private final DtoMapper dtoMapper;
 
     @Autowired
-    public FormationController(FormationService service, DtoMapper dtoMapper){
+    public FormationController(FormationService service){
         this.service = service;
-        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping(path = "/formations", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,10 +59,9 @@ public class FormationController {
     }
 
     @PutMapping(path = "/formations/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<FormationDto> updateFormation(@Valid @RequestBody FormationDto formationDto, @PathVariable("id") Integer id) {
-        Formation formation = service.saveFormation(dtoMapper.setFormationWithDto(service.getFormationById(id), formationDto));
+    public ResponseEntity<Formation> updateFormation(@Valid @RequestBody Formation formation) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(dtoMapper.toFormationDto(formation));
+                .body(service.saveFormation(formation));
     }
 }

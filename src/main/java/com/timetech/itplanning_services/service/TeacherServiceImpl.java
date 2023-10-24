@@ -1,7 +1,9 @@
 package com.timetech.itplanning_services.service;
 
 import com.timetech.itplanning_services.dao.TeacherRepository;
+import com.timetech.itplanning_services.dao.UserRepository;
 import com.timetech.itplanning_services.model.Teacher;
+import com.timetech.itplanning_services.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.List;
 public class TeacherServiceImpl implements TeacherService{
 
     private final TeacherRepository repository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public TeacherServiceImpl(TeacherRepository repository){
+    public TeacherServiceImpl(TeacherRepository repository, UserRepository userRepository){
         this.repository = repository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -32,6 +36,13 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public Teacher saveTeacher(Teacher teacher) {
         return repository.save(teacher);
+    }
+
+    @Override
+    public Teacher saveTeacher(Teacher teacher, User user) {
+        repository.save(teacher);
+        userRepository.save(user);
+        return teacher;
     }
 
     @Override

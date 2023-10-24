@@ -1,7 +1,5 @@
 package com.timetech.itplanning_services.controller;
 
-import com.timetech.itplanning_services.dto.LessonDto;
-import com.timetech.itplanning_services.mapper.DtoMapper;
 import com.timetech.itplanning_services.model.Lesson;
 import com.timetech.itplanning_services.service.LessonService;
 import jakarta.validation.Valid;
@@ -20,12 +18,10 @@ import java.util.Map;
 public class LessonController {
 
     private final LessonService service;
-    private final DtoMapper dtoMapper;
 
     @Autowired
-    public LessonController(LessonService service, DtoMapper dtoMapper){
+    public LessonController(LessonService service){
         this.service = service;
-        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping(path = "/lessons", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,10 +59,9 @@ public class LessonController {
     }
 
     @PutMapping(path = "/lessons/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LessonDto> updateLesson(@Valid @RequestBody LessonDto lessonDto, @PathVariable("id") Integer id) {
-        Lesson lesson = service.saveLesson(dtoMapper.setLessonWithDto(service.getLessonById(id), lessonDto));
+    public ResponseEntity<Lesson> updateLesson(@Valid @RequestBody Lesson lesson) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(dtoMapper.toLessonDto(lesson));
+                .body(service.saveLesson(lesson));
     }
 }

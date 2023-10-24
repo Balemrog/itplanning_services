@@ -2,8 +2,11 @@ package com.timetech.itplanning_services.controller;
 
 import com.timetech.itplanning_services.dto.StudentDto;
 import com.timetech.itplanning_services.mapper.DtoMapper;
+import com.timetech.itplanning_services.model.Role;
 import com.timetech.itplanning_services.model.Student;
+import com.timetech.itplanning_services.model.User;
 import com.timetech.itplanning_services.service.StudentService;
+import com.timetech.itplanning_services.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +23,13 @@ import java.util.Map;
 public class StudentController {
 
     private final StudentService service;
+    private final UserService userService;
     private final DtoMapper dtoMapper;
 
     @Autowired
-    public StudentController(StudentService service, DtoMapper dtoMapper){
+    public StudentController(StudentService service, UserService userService, DtoMapper dtoMapper){
         this.service = service;
+        this.userService = userService;
         this.dtoMapper = dtoMapper;
     }
 
@@ -56,10 +61,18 @@ public class StudentController {
     }
 
     @PostMapping(path = "/students", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveStudent(student));
+    public ResponseEntity<?> createStudent(@Valid @RequestBody Student student) {
+        String login = String.format("%1$s.%2$s@eni.fr", student.getFirstName(), student.getLastName());
+        if(!userService.hasUserWithLogin(login)) {
+            User user = new User(login, "password", Role.STUDENT, student);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(service.saveStudent(student, user));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(String.format("Il existe déjà un enseignant avec les identifiants suivant : ", login));
+        }
     }
 
     @PutMapping(path = "/students/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)

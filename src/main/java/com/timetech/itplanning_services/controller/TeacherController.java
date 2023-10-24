@@ -1,9 +1,10 @@
 package com.timetech.itplanning_services.controller;
 
-import com.timetech.itplanning_services.dto.TeacherDto;
-import com.timetech.itplanning_services.mapper.DtoMapper;
+import com.timetech.itplanning_services.model.Role;
 import com.timetech.itplanning_services.model.Teacher;
+import com.timetech.itplanning_services.model.User;
 import com.timetech.itplanning_services.service.TeacherService;
+import com.timetech.itplanning_services.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +21,12 @@ import java.util.Map;
 public class TeacherController {
 
     private final TeacherService service;
-    private final DtoMapper dtoMapper;
+    private final UserService userService;
 
     @Autowired
-    public TeacherController(TeacherService service, DtoMapper dtoMapper){
+    public TeacherController(TeacherService service, UserService userService){
         this.service = service;
-        this.dtoMapper = dtoMapper;
+        this.userService = userService;
     }
 
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -57,17 +58,24 @@ public class TeacherController {
     }
 
     @PostMapping(path = "/teachers", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Teacher> createTeacher(@Valid @RequestBody Teacher teacher) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveTeacher(teacher));
+    public ResponseEntity<?> createTeacher(@Valid @RequestBody Teacher teacher) {
+        String login = String.format("%1$s.%2$s@eni.fr", teacher.getFirstName(), teacher.getLastName());
+        if(!userService.hasUserWithLogin(login)) {
+            User user = new User(login, "password", Role.TEACHER, teacher);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(service.saveTeacher(teacher, user));
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(String.format("Il existe déjà un enseignant avec les identifiants suivant : ", login));
+        }
     }
 
     @PutMapping(path = "/teachers/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<TeacherDto> updateTeacher(@Valid @RequestBody TeacherDto teacherDto, @PathVariable("id") Integer id) {
-        Teacher teacher = service.saveTeacher(dtoMapper.setTeacherWithDto(service.getTeacherById(id), teacherDto));
+    public ResponseEntity<Teacher> updateTeacher(@Valid @RequestBody Teacher teacher, @PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(dtoMapper.toTeacherDto(teacher));
+                .body(service.saveTeacher(teacher));
     }
 }

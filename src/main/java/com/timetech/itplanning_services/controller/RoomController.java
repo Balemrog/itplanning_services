@@ -1,8 +1,10 @@
 package com.timetech.itplanning_services.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.timetech.itplanning_services.dto.RoomDto;
 import com.timetech.itplanning_services.mapper.DtoMapper;
 import com.timetech.itplanning_services.model.Room;
+import com.timetech.itplanning_services.model.Views;
 import com.timetech.itplanning_services.service.RoomService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ public class RoomController {
     }
 
     @GetMapping(path = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
+    @JsonView(Views.Public.class)
     public ResponseEntity<Map<String, List<Room>>> getAllRoom() {
         List<Room> rooms = service.getAllRoom();
         return ResponseEntity.status(HttpStatus.OK)
@@ -37,6 +40,7 @@ public class RoomController {
     }
 
     @GetMapping(path = "/rooms/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @JsonView(Views.Public.class)
     public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +60,8 @@ public class RoomController {
     }
 
     @PostMapping(path = "/rooms", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> createRoom(@Valid @RequestBody Room room) {
+    @JsonView(Views.Public.class)
+    public ResponseEntity<Room> createRoom(@RequestBody Room room) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(service.saveRoom(room));

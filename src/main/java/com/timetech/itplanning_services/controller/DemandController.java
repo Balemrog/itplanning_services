@@ -1,7 +1,5 @@
 package com.timetech.itplanning_services.controller;
 
-import com.timetech.itplanning_services.dto.DemandDto;
-import com.timetech.itplanning_services.mapper.DtoMapper;
 import com.timetech.itplanning_services.model.Demand;
 import com.timetech.itplanning_services.service.DemandService;
 import jakarta.validation.Valid;
@@ -20,12 +18,10 @@ import java.util.Map;
 public class DemandController {
 
     private final DemandService service;
-    private final DtoMapper dtoMapper;
 
     @Autowired
-    public DemandController(DemandService service, DtoMapper dtoMapper){
+    public DemandController(DemandService service){
         this.service = service;
-        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping(path = "/demands", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,10 +59,9 @@ public class DemandController {
     }
 
     @PutMapping(path = "/demands/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DemandDto> updateDemand(@Valid @RequestBody DemandDto demandDto, @PathVariable("id") Integer id) {
-        Demand demand = service.saveDemand(dtoMapper.setDemandWithDto(service.getDemandById(id), demandDto));
+    public ResponseEntity<Demand> updateDemand(@Valid @RequestBody Demand demand) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(dtoMapper.toDemandDto(demand));
+                .body(service.saveDemand(demand));
     }
 }
