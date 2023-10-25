@@ -19,17 +19,15 @@ public class Student {
     private String lastName;
 
     @NotNull
-    @Column(name = "role", columnDefinition = "varchar(20)")
-    @Enumerated(EnumType.STRING)
-    private Modality modality;
+    private String modality;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="formation_id", referencedColumnName="id", nullable=false)
     private Formation formation;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
     private SchoolClass schoolClass;
 
@@ -39,17 +37,25 @@ public class Student {
 
     public Student(){}
 
-    public Student(String firstName, String lastName, Modality modality) {
+    public Student(String firstName, String lastName, String modality) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.modality = modality;
     }
 
-    public Student(String firstName, String lastName, Modality modality, SchoolClass schoolClass) {
+    public Student(String firstName, String lastName, String modality, SchoolClass schoolClass) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.modality = modality;
         this.schoolClass = schoolClass;
+    }
+
+    public Student(String firstName, String lastName, String modality, SchoolClass schoolClass, Formation formation) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.modality = modality;
+        this.schoolClass = schoolClass;
+        this.formation = formation;
     }
 
     public int getId() {
@@ -76,11 +82,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public Modality getModality() {
+    public String getModality() {
         return modality;
     }
 
-    public void setModality(Modality modality) {
+    public void setModality(String modality) {
         this.modality = modality;
     }
 
@@ -106,5 +112,18 @@ public class Student {
 
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", modality=" + modality +
+                ", formation=" + formation +
+                ", schoolClass=" + schoolClass +
+                ", user=" + user +
+                '}';
     }
 }

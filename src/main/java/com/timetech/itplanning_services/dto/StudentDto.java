@@ -8,9 +8,9 @@ public class StudentDto {
 
     private String lastName;
 
-    private Modality modality;
+    private String modality;
 
-    public StudentDto(String firstName, String lastName, Modality modality) {
+    public StudentDto(String firstName, String lastName, String modality) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.modality = modality;
@@ -32,11 +32,11 @@ public class StudentDto {
         this.lastName = lastName;
     }
 
-    public Modality getModality() {
+    public String getModality() {
         return modality;
     }
 
-    public void setModality(Modality modality) {
+    public void setModality(String modality) {
         this.modality = modality;
     }
 }

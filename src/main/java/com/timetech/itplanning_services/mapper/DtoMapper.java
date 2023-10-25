@@ -50,4 +50,8 @@ public interface DtoMapper {
     SchoolClassDto toSchoolClassDto(SchoolClass schoolClass);
 
     SchoolClass setSchoolClassWithDto(SchoolClass schoolClass, SchoolClassDto schoolClassDto);
+
+    LessonSessionDto toLessonSessionDto(LessonSession lessonSession);
+
+    LessonSessionDto toSaveLessonSessionDto(LessonSession lessonSession, Lesson lesson, Room room, SchoolClass schoolClass, Teacher teacher);
 }

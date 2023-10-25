@@ -1,15 +1,12 @@
 package com.timetech.itplanning_services.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum Modality {
-    PRESENCE("Présentiel"),
-    PRESENCE_REMOTE("Hybride"),
-    REMOTE("Distanciel");
-
-    private final String modality;
-
-    Modality(String modality) {
-        this.modality = modality;
-    }
-
-    public String getValue() { return modality; }
+    @JsonProperty("Présentiel")
+    PRESENCE,
+    @JsonProperty("Hybride")
+    PRESENCE_REMOTE,
+    @JsonProperty("Distanciel")
+    REMOTE;
 }

@@ -32,7 +32,6 @@ public class TeacherController {
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, List<Teacher>>> getAllTeacher() {
         List<Teacher> teachers = service.getAllTeacher();
-        System.out.println(teachers);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Collections.singletonMap("data", teachers));

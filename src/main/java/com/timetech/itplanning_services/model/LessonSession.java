@@ -1,8 +1,11 @@
 package com.timetech.itplanning_services.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -14,38 +17,42 @@ public class LessonSession {
     private int id;
 
     @NotNull
-    private String label;
+    private String title;
 
     @NotNull
-    private Date sessionStartDate;
+    private LocalDateTime sessionStartDate;
 
     @NotNull
-    private Date sessionEndDate;
+    private LocalDateTime sessionEndDate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name="lesson_id", referencedColumnName="id", nullable = false)
+    @JsonIgnore
     private Lesson lesson;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="room_id", nullable=false)
+    @JsonIgnore
     private Room room;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional=false)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
+    @JsonIgnore
     private SchoolClass schoolClass;
 
     @NotNull
-    @ManyToOne(optional=false)
+    @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="teacher_id", referencedColumnName="id", nullable=false)
+    @JsonIgnore
     private Teacher teacher;
 
     public LessonSession() {}
 
-    public LessonSession(String label, Date sessionStartDate, Date sessionEndDate, Lesson lesson,  Room room, SchoolClass schoolClass, Teacher teacher) {
-        this.label = label;
+    public LessonSession(String title, LocalDateTime sessionStartDate, LocalDateTime sessionEndDate, Lesson lesson,  Room room, SchoolClass schoolClass, Teacher teacher) {
+        this.title = title;
         this.sessionStartDate = sessionStartDate;
         this.sessionEndDate = sessionEndDate;
         this.lesson = lesson;
@@ -62,27 +69,27 @@ public class LessonSession {
         this.id = id;
     }
 
-    public String getLabel() {
-        return label;
+    public String getTitle() {
+        return title;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Date getSessionStartDate() {
+    public LocalDateTime getSessionStartDate() {
         return sessionStartDate;
     }
 
-    public void setSessionStartDate(Date sessionStartDate) {
+    public void setSessionStartDate(LocalDateTime sessionStartDate) {
         this.sessionStartDate = sessionStartDate;
     }
 
-    public Date getSessionEndDate() {
+    public LocalDateTime getSessionEndDate() {
         return sessionEndDate;
     }
 
-    public void setSessionEndDate(Date sessionEndDate) {
+    public void setSessionEndDate(LocalDateTime sessionEndDate) {
         this.sessionEndDate = sessionEndDate;
     }
 
@@ -116,5 +123,19 @@ public class LessonSession {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    @Override
+    public String toString() {
+        return "LessonSession{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", sessionStartDate=" + sessionStartDate +
+                ", sessionEndDate=" + sessionEndDate +
+                ", lesson=" + lesson +
+                ", room=" + room +
+                ", schoolClass=" + schoolClass +
+                ", teacher=" + teacher +
+                '}';
     }
 }

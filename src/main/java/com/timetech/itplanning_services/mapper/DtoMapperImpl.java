@@ -20,7 +20,7 @@ public class DtoMapperImpl implements DtoMapper{
         if (teacher == null) {
             return null;
         }
-        return new TeacherDto(teacher.getFirstName(), teacher.getLastName(), teacher.getIsEmployee());
+        return new TeacherDto(teacher.getId(), teacher.getFirstName(), teacher.getLastName(), teacher.getIsEmployee());
     }
 
     @Override
@@ -124,7 +124,7 @@ public class DtoMapperImpl implements DtoMapper{
         if (room == null) {
             return null;
         }
-        return new RoomDto(room.getMaterial(), room.getRoomName(), room.getBuilding());
+        return new RoomDto(room.getId(), room.getMaterial(), room.getRoomName(), room.getBuilding());
     }
 
     @Override
@@ -151,7 +151,7 @@ public class DtoMapperImpl implements DtoMapper{
         if (lesson == null) {
             return null;
         }
-        return new LessonDto(lesson.getLabel());
+        return new LessonDto(lesson.getId(), lesson.getLabel());
     }
 
     @Override
@@ -195,7 +195,7 @@ public class DtoMapperImpl implements DtoMapper{
         if (schoolClass == null) {
             return null;
         }
-        return new SchoolClassDto(schoolClass.getLabel());
+        return new SchoolClassDto(schoolClass.getId(), schoolClass.getLabel());
     }
 
     @Override
@@ -205,5 +205,25 @@ public class DtoMapperImpl implements DtoMapper{
         }
         schoolClass.setLabel(schoolClassDto.getLabel());
         return schoolClass;
+    }
+
+    @Override
+    public LessonSessionDto toLessonSessionDto(LessonSession lessonSession) {
+        if (lessonSession == null) {
+            return null;
+        }
+        return new LessonSessionDto(lessonSession.getId(), lessonSession.getTitle(),
+                lessonSession.getSessionStartDate(), lessonSession.getSessionEndDate(), toLessonDto(lessonSession.getLesson()),
+                toRoomDto(lessonSession.getRoom()), toSchoolClassDto(lessonSession.getSchoolClass()), toTeacherDto(lessonSession.getTeacher()));
+    }
+
+    @Override
+    public LessonSessionDto toSaveLessonSessionDto(LessonSession lessonSession, Lesson lesson, Room room, SchoolClass schoolClass, Teacher teacher) {
+        if (lessonSession == null) {
+            return null;
+        }
+        return new LessonSessionDto(lessonSession.getId(), lessonSession.getTitle(),
+                lessonSession.getSessionStartDate(), lessonSession.getSessionEndDate(), toLessonDto(lesson),
+                toRoomDto(room), toSchoolClassDto(schoolClass), toTeacherDto(teacher));
     }
 }

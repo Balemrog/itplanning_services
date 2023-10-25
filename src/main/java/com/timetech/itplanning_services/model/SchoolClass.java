@@ -36,4 +36,12 @@ public class SchoolClass {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    @Override
+    public String toString() {
+        return "SchoolClass{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                '}';
+    }
 }

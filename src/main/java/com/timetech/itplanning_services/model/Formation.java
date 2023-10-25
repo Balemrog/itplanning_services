@@ -2,7 +2,6 @@ package com.timetech.itplanning_services.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "formation")
@@ -13,7 +12,6 @@ public class Formation {
     private int id;
 
     @NotNull
-    @Size(max=100)
     private String label;
 
     public Formation() {
@@ -37,5 +35,13 @@ public class Formation {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    @Override
+    public String toString() {
+        return "Formation{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                '}';
     }
 }

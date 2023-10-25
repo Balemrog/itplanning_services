@@ -58,6 +58,8 @@ public class RoomController {
     @PostMapping(path = "/rooms", consumes = MediaType.APPLICATION_JSON_VALUE)
     @JsonView(Views.Public.class)
     public ResponseEntity<Room> createRoom(@RequestBody Room room) {
+        System.out.println("DSFSDFSDFDSDSFSDSDF");
+        System.out.println(room);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(service.saveRoom(room));

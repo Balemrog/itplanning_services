@@ -1,7 +1,5 @@
 package com.timetech.itplanning_services.controller;
 
-import com.timetech.itplanning_services.dto.StudentDto;
-import com.timetech.itplanning_services.mapper.DtoMapper;
 import com.timetech.itplanning_services.model.Role;
 import com.timetech.itplanning_services.model.Student;
 import com.timetech.itplanning_services.model.User;
@@ -24,13 +22,11 @@ public class StudentController {
 
     private final StudentService service;
     private final UserService userService;
-    private final DtoMapper dtoMapper;
 
     @Autowired
-    public StudentController(StudentService service, UserService userService, DtoMapper dtoMapper){
+    public StudentController(StudentService service, UserService userService){
         this.service = service;
         this.userService = userService;
-        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping(path = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,6 +58,7 @@ public class StudentController {
 
     @PostMapping(path = "/students", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createStudent(@Valid @RequestBody Student student) {
+        System.out.println("POSTTT LESSON SESSION" + student);
         String login = String.format("%1$s.%2$s@eni.fr", student.getFirstName(), student.getLastName());
         login.toLowerCase();
         if(!userService.hasUserWithLogin(login)) {
@@ -72,15 +69,14 @@ public class StudentController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(String.format("Il existe déjà un enseignant avec les identifiants suivant : ", login));
+                    .body(String.format("Il existe déjà un élève avec les identifiants suivant : ", login));
         }
     }
 
     @PutMapping(path = "/students/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<StudentDto> updateStudent(@Valid @RequestBody StudentDto studentDto, @PathVariable("id") Integer id) {
-        Student student = service.saveStudent(dtoMapper.setStudentWithDto(service.getStudentById(id), studentDto));
+    public ResponseEntity<Student> updateStudent(@Valid @RequestBody Student student) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(dtoMapper.toStudentDto(student));
+                .body(service.saveStudent(student));
     }
 }

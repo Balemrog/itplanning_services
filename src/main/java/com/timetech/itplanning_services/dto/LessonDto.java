@@ -2,10 +2,21 @@ package com.timetech.itplanning_services.dto;
 
 public class LessonDto {
 
+    private int id;
+
     private String label;
 
-    public LessonDto(String label) {
+    public LessonDto(int id, String label) {
+        this.id = id;
         this.label = label;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLabel() {
