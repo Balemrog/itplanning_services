@@ -2,7 +2,6 @@ package com.timetech.itplanning_services.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.timetech.itplanning_services.model.Campus;
-import com.timetech.itplanning_services.model.Views;
 import com.timetech.itplanning_services.service.CampusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ public class CampusController {
     }
 
     @GetMapping(path = "/campuses", produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(Views.Public.class)
     public ResponseEntity<Map<String, List<Campus>>> getAllCampus() {
         List<Campus> campuses = service.getAllCampus();
         return ResponseEntity.status(HttpStatus.OK)
@@ -36,7 +34,6 @@ public class CampusController {
     }
 
     @GetMapping(path = "/campuses/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(Views.Public.class)
     public ResponseEntity<Campus> getCampusById(@PathVariable("id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,7 +53,6 @@ public class CampusController {
     }
 
     @PostMapping(path = "/campuses", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(Views.Public.class)
     public ResponseEntity<Campus> createCampus(@Valid @RequestBody Campus campus) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,7 +60,6 @@ public class CampusController {
     }
 
     @PutMapping(path = "/campuses/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @JsonView(Views.Public.class)
     public ResponseEntity<Campus> updateCampus(@Valid @RequestBody Campus campus) {
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)

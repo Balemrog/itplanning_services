@@ -1,12 +1,9 @@
 package com.timetech.itplanning_services.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "lesson_session")
@@ -28,25 +25,21 @@ public class LessonSession {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name="lesson_id", referencedColumnName="id", nullable = false)
-    @JsonIgnore
     private Lesson lesson;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="room_id", nullable=false)
-    @JsonIgnore
     private Room room;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
-    @JsonIgnore
     private SchoolClass schoolClass;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional=false)
     @JoinColumn(name="teacher_id", referencedColumnName="id", nullable=false)
-    @JsonIgnore
     private Teacher teacher;
 
     public LessonSession() {}

@@ -1,7 +1,5 @@
 package com.timetech.itplanning_services.dto;
 
-import com.timetech.itplanning_services.model.Modality;
-
 public class StudentDto {
 
     private String firstName;

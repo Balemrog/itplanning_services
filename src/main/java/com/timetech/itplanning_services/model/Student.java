@@ -1,6 +1,5 @@
 package com.timetech.itplanning_services.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -32,7 +31,6 @@ public class Student {
     private SchoolClass schoolClass;
 
     @OneToOne(mappedBy="student", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private User user;
 
     public Student(){}

@@ -2,11 +2,8 @@ package com.timetech.itplanning_services.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "teacher")
@@ -36,7 +33,6 @@ public class Teacher {
     private List<Lesson> lessons;
 
     @OneToOne(mappedBy="teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
     private User user;
 
     public Teacher() {

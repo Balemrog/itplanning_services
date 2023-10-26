@@ -1,6 +1,5 @@
 package com.timetech.itplanning_services.model;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,11 +11,9 @@ public class Campus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(Views.Public.class)
     private int id;
 
     @NotNull
-    @JsonView(Views.Public.class)
     private String location;
 
     @ManyToMany
@@ -24,11 +21,9 @@ public class Campus {
             joinColumns=@JoinColumn(name="campus_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="formation_id", referencedColumnName="id")
     )
-    @JsonView(Views.Internal.class)
     private List<Formation> formations;
     
     @OneToMany(mappedBy = "campus", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonView(Views.Internal.class)
     private List<Room> rooms;
 
     public Campus() {

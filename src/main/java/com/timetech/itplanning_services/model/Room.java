@@ -1,6 +1,5 @@
 package com.timetech.itplanning_services.model;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,29 +9,20 @@ public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(Views.Public.class)
     private int id;
 
     @NotNull
-    @JsonView(Views.Public.class)
     private String material;
 
     @NotNull
-    @JsonView(Views.Public.class)
     private String roomName;
 
     @NotNull
-    @JsonView(Views.Public.class)
     private String building;
-
-    //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    //    @JsonManagedReference
-    //    @JsonBackReference
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="campus_id", referencedColumnName="id", nullable=false)
-    @JsonView(Views.Public.class)
     private Campus campus;
 
     public Room() {
@@ -83,7 +73,6 @@ public class Room {
         this.building = building;
     }
 
-//    @JsonIgnore
     public Campus getCampus() {
         return campus;
     }
