@@ -21,12 +21,12 @@ public class Student {
     private String modality;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="formation_id", referencedColumnName="id", nullable=false)
     private Formation formation;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
     private SchoolClass schoolClass;
 

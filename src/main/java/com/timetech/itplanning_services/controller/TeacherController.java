@@ -1,20 +1,25 @@
 package com.timetech.itplanning_services.controller;
 
+import com.timetech.itplanning_services.dto.TeacherCreationDto;
+import com.timetech.itplanning_services.dto.TeacherDto;
+import com.timetech.itplanning_services.dto.TeacherUpdateDto;
+import com.timetech.itplanning_services.model.Lesson;
 import com.timetech.itplanning_services.model.Role;
 import com.timetech.itplanning_services.model.Teacher;
 import com.timetech.itplanning_services.model.User;
+import com.timetech.itplanning_services.service.LessonService;
 import com.timetech.itplanning_services.service.TeacherService;
 import com.timetech.itplanning_services.service.UserService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -24,24 +29,28 @@ public class TeacherController {
     private final UserService userService;
 
     @Autowired
+    private LessonService lessonService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     public TeacherController(TeacherService service, UserService userService){
         this.service = service;
         this.userService = userService;
     }
 
     @GetMapping(path = "/teachers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<Teacher>>> getAllTeacher() {
+    public List<TeacherDto> getAllTeacher() {
         List<Teacher> teachers = service.getAllTeacher();
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(Collections.singletonMap("data", teachers));
+        return teachers.stream().map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(path = "/teachers/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Teacher> getTeacherById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.getTeacherById(id));
+    public TeacherDto getTeacherById(@PathVariable("id") Integer id) {
+        Teacher teacher = service.getTeacherById(id);
+        return modelMapper.map(teacher, TeacherDto.class);
     }
 
     @DeleteMapping(path = "/teachers/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -57,14 +66,24 @@ public class TeacherController {
     }
 
     @PostMapping(path = "/teachers", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createTeacher(@Valid @RequestBody Teacher teacher) {
-        String login = String.format("%1$s.%2$s@eni.fr", teacher.getFirstName(), teacher.getLastName());
-        login.toLowerCase();
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createTeacher(@Valid @RequestBody TeacherCreationDto teacherCreationDto) {
+        Teacher teacher = modelMapper.map(teacherCreationDto, Teacher.class);
+
+        // Map lesson IDs to Lesson entities
+        List<Lesson> lessons = teacherCreationDto.getLessons().stream()
+                .map(lessonId -> lessonService.getLessonById(Integer.parseInt(lessonId)))
+                .collect(Collectors.toList());
+
+        teacher.setLessons(lessons);
+
+        String login = String.format("%1$s.%2$s@eni.fr", teacherCreationDto.getFirstName(), teacherCreationDto.getLastName()).toLowerCase();
         if(!userService.hasUserWithLogin(login)) {
             User user = new User(login, "password", Role.TEACHER, teacher);
+            Teacher teacherCreated = service.saveTeacher(teacher, user);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(service.saveTeacher(teacher, user));
+                    .body(modelMapper.map(teacherCreated, TeacherDto.class));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -73,9 +92,18 @@ public class TeacherController {
     }
 
     @PutMapping(path = "/teachers/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Teacher> updateTeacher(@Valid @RequestBody Teacher teacher, @PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveTeacher(teacher));
+    public TeacherDto updateTeacher(@Valid @RequestBody TeacherUpdateDto teacherUpdateDto) {
+        Teacher teacher = modelMapper.map(teacherUpdateDto, Teacher.class);
+        List<Lesson> lessons = teacherUpdateDto.getLessons().stream()
+                .map(lessonId -> lessonService.getLessonById(Integer.parseInt(lessonId)))
+                .collect(Collectors.toList());
+        teacher.setLessons(lessons);
+
+        Teacher teacherUpdated = service.saveTeacher(teacher);
+        return modelMapper.map(teacherUpdated, TeacherDto.class);
+    }
+
+    private TeacherDto convertToDto(Teacher teacher) {
+        return modelMapper.map(teacher, TeacherDto.class);
     }
 }

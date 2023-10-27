@@ -1,20 +1,18 @@
 package com.timetech.itplanning_services.controller;
 
-import com.timetech.itplanning_services.model.Role;
-import com.timetech.itplanning_services.model.Student;
-import com.timetech.itplanning_services.model.User;
-import com.timetech.itplanning_services.service.StudentService;
-import com.timetech.itplanning_services.service.UserService;
+import com.timetech.itplanning_services.dto.*;
+import com.timetech.itplanning_services.model.*;
+import com.timetech.itplanning_services.service.*;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -24,24 +22,30 @@ public class StudentController {
     private final UserService userService;
 
     @Autowired
+    private SchoolClassService schoolClassService;
+    @Autowired
+    private FormationService formationService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     public StudentController(StudentService service, UserService userService){
         this.service = service;
         this.userService = userService;
     }
 
     @GetMapping(path = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<Student>>> getAllStudent() {
+    public List<StudentDto> getAllStudent() {
         List<Student> students = service.getAllStudent();
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(Collections.singletonMap("data", students));
+        return students.stream().map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(path = "/students/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> getStudentById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.getStudentById(id));
+    public StudentDto getStudentById(@PathVariable("id") Integer id) {
+        Student student = service.getStudentById(id);
+        return modelMapper.map(student, StudentDto.class);
     }
 
     @DeleteMapping(path = "/students/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -57,15 +61,16 @@ public class StudentController {
     }
 
     @PostMapping(path = "/students", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createStudent(@Valid @RequestBody Student student) {
-        System.out.println("POSTTT LESSON SESSION" + student);
-        String login = String.format("%1$s.%2$s@eni.fr", student.getFirstName(), student.getLastName());
-        login.toLowerCase();
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> createStudent(@Valid @RequestBody StudentCreationDto studentCreationDto) {
+        Student student = modelMapper.map(studentCreationDto, Student.class);
+        String login = String.format("%1$s.%2$s@eni.fr", studentCreationDto.getFirstName(), studentCreationDto.getLastName()).toLowerCase();
         if(!userService.hasUserWithLogin(login)) {
             User user = new User(login, "password", Role.STUDENT, student);
+            Student studentCreated = service.saveStudent(student, user);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(service.saveStudent(student, user));
+                    .body(modelMapper.map(studentCreated, StudentDto.class));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -74,9 +79,13 @@ public class StudentController {
     }
 
     @PutMapping(path = "/students/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Student> updateStudent(@Valid @RequestBody Student student) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveStudent(student));
+    public StudentDto updateStudent(@Valid @RequestBody StudentUpdateDto studentUpdateDto) {
+        Student student = modelMapper.map(studentUpdateDto, Student.class);
+        Student studentUpdated = service.saveStudent(student);
+        return modelMapper.map(studentUpdated, StudentDto.class);
+    }
+
+    private StudentDto convertToDto(Student student) {
+        return modelMapper.map(student, StudentDto.class);
     }
 }

@@ -6,11 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
-public class LessonSessionDto {
+public class LessonSessionUpdateDto {
 
     @Id
     @NotNull
@@ -20,10 +18,13 @@ public class LessonSessionDto {
     private String title;
 
     @NotBlank
-    private LocalDateTime start;
+    private String start;
 
     @NotBlank
-    private LocalDateTime end;
+    private String end;
+
+    @NotNull
+    private TeacherDto teacher;
 
     @NotNull
     private LessonDto lesson;
@@ -33,9 +34,6 @@ public class LessonSessionDto {
 
     @NotNull
     private SchoolClassDto schoolClass;
-
-    @NotNull
-    private TeacherDto teacher;
 
     @Override
     public String toString() {

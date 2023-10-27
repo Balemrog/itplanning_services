@@ -18,7 +18,9 @@ public class DataMock implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         String login = "service.planning@campus-eni.fr";
-        User user = new User(login, "password", Role.SERVICE_PLANNING);
-        service.saveUser(user);
+        if(!service.hasUserWithLogin(login)) {
+            User user = new User(login, "password", Role.SERVICE_PLANNING);
+            service.saveUser(user);
+        }
     }
 }

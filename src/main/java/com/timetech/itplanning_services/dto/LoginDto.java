@@ -1,8 +1,13 @@
 package com.timetech.itplanning_services.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginDto {
 
+    @NotBlank
     private String username;
+
+    @NotBlank
     private String password;
 
     public LoginDto(String username, String password) {

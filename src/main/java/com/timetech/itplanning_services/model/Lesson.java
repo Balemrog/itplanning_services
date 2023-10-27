@@ -38,4 +38,12 @@ public class Lesson {
     public void setLabel(String label) {
         this.label = label;
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", label='" + label + '\'' +
+                '}';
+    }
 }

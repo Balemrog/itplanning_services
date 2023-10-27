@@ -1,20 +1,13 @@
 package com.timetech.itplanning_services.dto;
 
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class FormationDto {
-
-    @Id
-    @NotNull
-    private int id;
+public class LessonCreateDto {
 
     @NotBlank
     private String label;
-
 }

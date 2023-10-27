@@ -6,15 +6,25 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class CampusDto {
+public class TeacherUpdateDto {
 
     @Id
     @NotNull
-    private int id;
+    private Integer id;
 
     @NotBlank
-    private String location;
+    private String firstName;
 
+    @NotBlank
+    private String lastName;
+
+    @NotNull
+    private Boolean isEmployee;
+
+    @NotNull
+    private List<String> lessons;
 }

@@ -1,6 +1,5 @@
 package com.timetech.itplanning_services.dto;
 
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,11 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StudentDto {
-
-    @Id
-    @NotNull
-    private int id;
+public class StudentCreationDto {
 
     @NotBlank
     private String firstName;

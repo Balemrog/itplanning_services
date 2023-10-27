@@ -6,15 +6,27 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Getter
 @Setter
-public class CampusDto {
+public class StudentUpdateDto {
 
     @Id
     @NotNull
     private int id;
 
     @NotBlank
-    private String location;
+    private String firstName;
 
+    @NotBlank
+    private String lastName;
+
+    @NotNull
+    private String modality;
+
+    @NotNull
+    private SchoolClassDto schoolClass;
+
+    @NotNull
+    private FormationDto formation;
 }

@@ -1,51 +1,28 @@
 package com.timetech.itplanning_services.dto;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class RoomDto {
 
+    @Id
+    @NotNull
     private int id;
 
+    @NotBlank
     private String material;
 
+    @NotBlank
     private String roomName;
 
+    @NotBlank
     private String building;
 
-    public RoomDto(int id, String material, String roomName, String building) {
-        this.id = id;
-        this.material = material;
-        this.roomName = roomName;
-        this.building = building;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public String getBuilding() {
-        return building;
-    }
-
-    public void setBuilding(String building) {
-        this.building = building;
-    }
+    @NotNull
+    private CampusDto campus;
 }

@@ -1,18 +1,19 @@
 package com.timetech.itplanning_services.controller;
 
-import com.fasterxml.jackson.annotation.JsonView;
+import com.timetech.itplanning_services.dto.*;
 import com.timetech.itplanning_services.model.Room;
+import com.timetech.itplanning_services.service.CampusService;
 import com.timetech.itplanning_services.service.RoomService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -21,23 +22,27 @@ public class RoomController {
     private final RoomService service;
 
     @Autowired
+    private CampusService campusService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     public RoomController(RoomService service){
         this.service = service;
     }
 
     @GetMapping(path = "/rooms", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<Room>>> getAllRoom() {
+    public List<RoomDto> getAllRoom() {
         List<Room> rooms = service.getAllRoom();
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(Collections.singletonMap("data", rooms));
+        return rooms.stream().map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(path = "/rooms/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> getRoomById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.getRoomById(id));
+    public RoomDto getRoomById(@PathVariable("id") Integer id) {
+        Room room = service.getRoomById(id);
+        return modelMapper.map(room, RoomDto.class);
     }
 
     @DeleteMapping(path = "/rooms/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -53,18 +58,21 @@ public class RoomController {
     }
 
     @PostMapping(path = "/rooms", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> createRoom(@RequestBody Room room) {
-        System.out.println("DSFSDFSDFDSDSFSDSDF");
-        System.out.println(room);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveRoom(room));
+    @ResponseStatus(HttpStatus.CREATED)
+    public RoomDto createRoom(@RequestBody RoomCreationDto roomCreationDto) {
+        Room room = modelMapper.map(roomCreationDto, Room.class);
+        Room roomCreated = service.saveRoom(room);
+        return modelMapper.map(roomCreated, RoomDto.class);
     }
 
     @PutMapping(path = "/rooms/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Room> updateRoom(@Valid @RequestBody Room room) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveRoom(room));
+    public RoomDto updateRoom(@Valid @RequestBody RoomUpdateDto roomUpdateDto) {
+        Room room = modelMapper.map(roomUpdateDto, Room.class);
+        Room roomUpdated = service.saveRoom(room);
+        return modelMapper.map(roomUpdated, RoomDto.class);
+    }
+
+    private RoomDto convertToDto(Room room) {
+        return modelMapper.map(room, RoomDto.class);
     }
 }

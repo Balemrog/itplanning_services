@@ -23,22 +23,22 @@ public class LessonSession {
     private LocalDateTime sessionEndDate;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="lesson_id", referencedColumnName="id", nullable = false)
     private Lesson lesson;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="room_id", nullable=false)
     private Room room;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="school_class_id", referencedColumnName="id", nullable=false)
     private SchoolClass schoolClass;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER, optional=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional=false)
     @JoinColumn(name="teacher_id", referencedColumnName="id", nullable=false)
     private Teacher teacher;
 

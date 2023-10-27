@@ -1,48 +1,41 @@
 package com.timetech.itplanning_services.dto;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
 public class TeacherDto {
 
-    private int id;
+    @Id
+    @NotNull
+    private Integer id;
+
+    @NotBlank
     private String firstName;
+
+    @NotBlank
     private String lastName;
+
+    @NotNull
     private Boolean isEmployee;
 
-    public TeacherDto(int id, String firstName, String lastName, Boolean isEmployee) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isEmployee = isEmployee;
-    }
+    @NotNull
+    private List<LessonDto> lessons;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public Boolean getIsEmployee() {
-        return isEmployee;
-    }
-
-    public void setIsEmployee(Boolean isEmployee) {
-        isEmployee = isEmployee;
+    @Override
+    public String toString() {
+        return "TeacherDto{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isEmployee=" + isEmployee +
+                ", lessons=" + lessons +
+                '}';
     }
 }

@@ -8,13 +8,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CampusDto {
+public class RoomUpdateDto {
 
     @Id
     @NotNull
     private int id;
 
     @NotBlank
-    private String location;
+    private String material;
 
+    @NotBlank
+    private String roomName;
+
+    @NotBlank
+    private String building;
+
+    @NotNull
+    private CampusDto campus;
 }

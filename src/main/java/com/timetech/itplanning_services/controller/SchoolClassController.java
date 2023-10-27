@@ -1,17 +1,18 @@
 package com.timetech.itplanning_services.controller;
 
+import com.timetech.itplanning_services.dto.*;
 import com.timetech.itplanning_services.model.SchoolClass;
 import com.timetech.itplanning_services.service.SchoolClassService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -20,23 +21,24 @@ public class SchoolClassController {
     private final SchoolClassService service;
 
     @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
     public SchoolClassController(SchoolClassService service){
         this.service = service;
     }
 
     @GetMapping(path = "/school-classes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, List<SchoolClass>>> getAllSchoolClass() {
+    public List<SchoolClassDto> getAllSchoolClass() {
         List<SchoolClass> schoolClasses = service.getAllSchoolClass();
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(Collections.singletonMap("data", schoolClasses));
+        return schoolClasses.stream().map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(path = "/school-classes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SchoolClass> getSchoolClassById(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.getSchoolClassById(id));
+    public SchoolClassDto getSchoolClassById(@PathVariable("id") Integer id) {
+        SchoolClass schoolClass = service.getSchoolClassById(id);
+        return modelMapper.map(schoolClass, SchoolClassDto.class);
     }
 
     @DeleteMapping(path = "/school-classes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -52,16 +54,21 @@ public class SchoolClassController {
     }
 
     @PostMapping(path = "/school-classes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SchoolClass> createSchoolClass(@Valid @RequestBody SchoolClass schoolClass) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveSchoolClass(schoolClass));
+    @ResponseStatus(HttpStatus.CREATED)
+    public SchoolClassDto createSchoolClass(@Valid @RequestBody SchoolClassCreationDto schoolClassCreationDto) {
+        SchoolClass schoolClass = modelMapper.map(schoolClassCreationDto, SchoolClass.class);
+        SchoolClass schoolClassCreated = service.saveSchoolClass(schoolClass);
+        return modelMapper.map(schoolClassCreated, SchoolClassDto.class);
     }
 
     @PutMapping(path = "/school-classes/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<SchoolClass> updateSchoolClass(@Valid @RequestBody SchoolClass schoolClass) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(service.saveSchoolClass(schoolClass));
+    public SchoolClassDto updateSchoolClass(@Valid @RequestBody SchoolClassUpdateDto schoolClassUpdateDto) {
+        SchoolClass schoolClass = modelMapper.map(schoolClassUpdateDto, SchoolClass.class);
+        SchoolClass schoolClassUpdated = service.saveSchoolClass(schoolClass);
+        return modelMapper.map(schoolClassUpdated, SchoolClassDto.class);
+    }
+
+    private SchoolClassDto convertToDto(SchoolClass schoolClass) {
+        return modelMapper.map(schoolClass, SchoolClassDto.class);
     }
 }

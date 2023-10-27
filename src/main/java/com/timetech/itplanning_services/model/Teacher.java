@@ -22,8 +22,8 @@ public class Teacher {
     @NotNull
     private Boolean isEmployee;
 
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Demand> demands;
+//    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Demand> demands;
 
     @ManyToMany
     @JoinTable(name="teachers_lesson",
@@ -83,13 +83,13 @@ public class Teacher {
         this.isEmployee = isEmployee;
     }
 
-    public List<Demand> getDemands() {
-        return demands;
-    }
-
-    public void setDemands(List<Demand> demands) {
-        this.demands = demands;
-    }
+//    public List<Demand> getDemands() {
+//        return demands;
+//    }
+//
+//    public void setDemands(List<Demand> demands) {
+//        this.demands = demands;
+//    }
 
     public List<Lesson> getLessons() {
         return lessons;
@@ -105,5 +105,17 @@ public class Teacher {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", isEmployee=" + isEmployee +
+                ", lessons=" + lessons +
+                ", user=" + user +
+                '}';
     }
 }

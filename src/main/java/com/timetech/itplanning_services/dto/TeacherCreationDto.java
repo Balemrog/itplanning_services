@@ -1,19 +1,15 @@
 package com.timetech.itplanning_services.dto;
 
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.validation.constraints.NotNull;
 
+import java.util.List;
 
 @Getter
 @Setter
-public class StudentDto {
-
-    @Id
-    @NotNull
-    private int id;
+public class TeacherCreationDto {
 
     @NotBlank
     private String firstName;
@@ -22,11 +18,8 @@ public class StudentDto {
     private String lastName;
 
     @NotNull
-    private String modality;
+    private Boolean isEmployee;
 
     @NotNull
-    private SchoolClassDto schoolClass;
-
-    @NotNull
-    private FormationDto formation;
+    private List<String> lessons;
 }

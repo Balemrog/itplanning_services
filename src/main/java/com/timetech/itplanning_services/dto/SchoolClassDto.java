@@ -1,28 +1,20 @@
 package com.timetech.itplanning_services.dto;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SchoolClassDto {
 
+    @Id
+    @NotNull
     private int id;
+
+    @NotBlank
     private String label;
 
-    public SchoolClassDto(int id, String label) {
-        this.id = id;
-        this.label = label;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
 }

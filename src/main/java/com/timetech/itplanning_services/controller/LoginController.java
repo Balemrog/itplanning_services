@@ -4,6 +4,7 @@ import com.timetech.itplanning_services.dto.LoginDto;
 import com.timetech.itplanning_services.dto.UserDto;
 import com.timetech.itplanning_services.model.User;
 import com.timetech.itplanning_services.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +24,7 @@ public class LoginController {
     }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserDto> createTeacher(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<UserDto> createTeacher(@Valid @RequestBody LoginDto loginDto) {
         Optional<User> userOptional = service.validLoginAndPassword(loginDto.getUsername(), loginDto.getPassword());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
